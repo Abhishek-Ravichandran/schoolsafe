@@ -1,4 +1,4 @@
-# SchoolSafe - Rails Application for CIS 557
+# SchoolSafe - Rails App for CIS 557 Project
 
 ## Getting started
 
@@ -11,10 +11,16 @@ $ bundle install --without production
 Next, migrate the database:
 
 ```
-$ rake db:migrate
+$ rails db:migrate
 ```
 
-Run the app in a local server:
+Finally, run the test suite to verify that everything is working correctly:
+
+```
+$ rails test
+```
+
+If the test suite passes, you'll be ready to run the app in a local server:
 
 ```
 $ rails server
