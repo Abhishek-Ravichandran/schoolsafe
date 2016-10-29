@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+# ruby '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
@@ -8,6 +8,7 @@ gem 'sqlite3'
 
 gem 'annotate'
 
+gem 'execjs' # added this to run on Windows
 gem 'bootstrap-sass', '3.3.6'
 
 # Use SCSS for stylesheets
@@ -17,10 +18,13 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+
+## Comment out 'therubyracer' to run on Windows
+# gem 'therubyracer', platforms: :ruby
 
 gem 'twitter-bootstrap-rails'
-gem 'less-rails'
+# gem 'less-rails' # comment out less-rails to run on Windows
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw] # Windows
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
