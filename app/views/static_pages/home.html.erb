@@ -8,15 +8,15 @@
       center: philly
     });
     <% School.all.each do |s| %>
-      var lng = <%= s["latitude"].to_f %>;
-      var lat = <%= s["longitude"].to_f %>;
+      var lat = <%= s["latitude"].to_f %>;
+      var lng = <%= s["longitude"].to_f %>;
       var pos = {lat: lat, lng: lng };
       var marker = new google.maps.Marker({
        position: pos,
        map: map
       });
     <% end %>
-    
+
     }
 </script>
 <script async defer
