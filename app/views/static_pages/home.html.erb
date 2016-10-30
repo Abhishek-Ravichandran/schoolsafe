@@ -1,5 +1,5 @@
 <% provide(:title, "Home") %>
-<div id="map"></div>
+<div id="map" class="col-sm-9"></div>
 <script>
   function initMap() {
     var philly = {lat: 40.0048632, lng: -75.1880722};
@@ -8,17 +8,33 @@
       center: philly
     });
     <% School.all.each do |s| %>
-      var lng = <%= s["latitude"].to_f %>;
-      var lat = <%= s["longitude"].to_f %>;
+      var lat = <%= s["latitude"].to_f %>;
+      var lng = <%= s["longitude"].to_f %>;
       var pos = {lat: lat, lng: lng };
       var marker = new google.maps.Marker({
        position: pos,
        map: map
       });
     <% end %>
-    
     }
 </script>
+<div id="list" class="col-sm-3">
+  <% School.all.each do |s| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= s["name"] %>
+      </div>
+      <div class="panel-body">
+        <p>
+          <%= s["address"] %>
+        </p>
+        <p>
+          <%= s["grade_level"] %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT0DTbOr1pJzEwQqtrY-pIR69-NZVnwtI &callback=initMap">
 </script>

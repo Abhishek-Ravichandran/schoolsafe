@@ -7,6 +7,7 @@
 #  address     :string
 #  zipcode     :string
 #  grade_level :string
+#  school_type :string
 #  latitude    :string
 #  longitude   :string
 #  created_at  :datetime         not null

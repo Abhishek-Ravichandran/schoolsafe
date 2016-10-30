@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028215927) do
+ActiveRecord::Schema.define(version: 20161030154043) do
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "address"
     t.string   "zipcode"
     t.string   "grade_level"
+    t.string   "school_type"
     t.string   "latitude"
     t.string   "longitude"
     t.datetime "created_at",  null: false
