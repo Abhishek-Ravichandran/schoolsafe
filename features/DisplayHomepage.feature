@@ -21,4 +21,8 @@ Feature: Display Homepage
   Scenario: User sees list
     Given I am on the homepage
     Then I should see a list of schools
+    
+  Scenario: User sees search bar
+    Given I am on the homepage
+    Then I should see a search bar
         
