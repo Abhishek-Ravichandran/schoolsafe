@@ -25,4 +25,9 @@ Feature: Display Homepage
   Scenario: User sees search bar
     Given I am on the homepage
     Then I should see a search bar
+    
+  Scenario: User can navigate to the 'About' page
+    Given I am on the homepage
+    When I click the 'About' link
+    Then I should see the 'About' page
         

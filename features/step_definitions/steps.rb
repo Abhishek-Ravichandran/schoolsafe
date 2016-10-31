@@ -30,3 +30,11 @@ Then (/^I should see a search bar$/) do
     page.find(:xpath, '//div[@class="col-sm-3 col-md-3"]/form[@role="search"]')
 end
 
+When (/^I click the 'About' link$/) do
+  click_link "About"
+end
+
+Then (/^I should see the 'About' page$/) do
+  assert page.has_content?("The SchoolSafe application evaluates the safety of schools in the Philadelphia area.")
+end
+
