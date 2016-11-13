@@ -7,6 +7,11 @@
       zoom: 12,
       center: philly
     });
+    var gmInput = document.getElementById('map-input');
+    var searchBox = new google.maps.places.SearchBox(gmInput);
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
     <% @schools.each do |s| %>
       var lat = <%= s["latitude"].to_f %>;
       var lng = <%= s["longitude"].to_f %>;
@@ -15,6 +20,35 @@
        position: pos,
        map: map
       });
+    var markers = [];
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+        markers.push(new google.maps.Marker({
+          map: map,
+          title: place.name,
+          position: place.geometry.location
+        }));
+        if (place.geometry.viewport) {
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
     <% end %>
     }
 </script>
@@ -23,5 +57,5 @@
   
   <%= render 'filter' %>
   <%= render 'list' %>
-  
+
 </div>
