@@ -1,7 +1,8 @@
 <% @schools.each do |s| %>
+  <% sid = s["id"] %>
     <div class="panel panel-default list-elem">
       <div class="panel-heading">
-        <%= s["name"] %>
+        <a href=/schools/<%= sid %>><%= s["name"] %></a>
       </div>
       <div class="panel-body">
         <p>
