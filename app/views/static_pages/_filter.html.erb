@@ -1,0 +1,23 @@
+<div class="filters">
+<%= form_for(:static_pages, url: root_path) do |f| %>
+    <div class="checkbox school-filter">
+        <%= check_box_tag(:pre) %>
+        <%= label_tag(:pre, "Preschool") %>
+    </div>
+    <div class="checkbox school-filter">
+        <%= check_box_tag(:elem) %>
+        <%= label_tag(:elem, "Elementary") %>
+    </div>
+    <div class="checkbox school-filter">
+        <%= check_box_tag(:mid) %>
+        <%= label_tag(:mid, "Middle") %>
+    </div>
+    <div class="checkbox school-filter">
+        <%= check_box_tag(:high) %>
+        <%= label_tag(:pre, "High") %>
+    </div>
+
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>
+</div>
+
