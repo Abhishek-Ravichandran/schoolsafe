@@ -9,10 +9,11 @@ Feature: Display a list of schools
     Then I should see a list of schools
   
   Scenario: User can filter by grade level
-    Given I am on the homepage
+    Given There are two schools in the database
+    And I am on the main page
     When I select a grade level
     And I click Submit
-    Then I should see a list of schools for that grade level
+    Then I should see the one school for that grade level
   
   # Scenario: User can search for specific school that exists
   #   Given I am on the homepage

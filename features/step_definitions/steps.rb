@@ -26,33 +26,59 @@ Then (/^I should see a list of schools$/) do
   page.find_by_id("list")
 end
 
+Given(/^There is a school in the database$/) do
+  @school = School.new do |s|
+    s.name = "Capybara High School"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "high"
+    s.zipcode = "19104"
+  end
+  @school.save
+end
+
+And(/^I am on the front page$/) do
+  visit root_path
+end
+
+When (/^I click on the name of the school$/) do
+  click_link('Capybara High School')
+end
+
+Then (/^I should be directed to the school's page$/) do
+  assert page.has_content?('Capybara High School')
+end
+
+Given(/^There are two schools in the database$/) do
+  @first_school = School.new do |s|
+    s.name = "Capybara High School"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "high"
+    s.zipcode = "19104"
+  end
+  @first_school.save
+  @second_school = School.new do |s|
+    s.name = "Capybara Elementary"
+    s.address = "3402 Walnut Street"
+    s.grade_level = "elem"
+    s.zipcode = "19104"
+  end
+  @second_school.save
+end
+
+And(/^I am on the main page$/) do
+  visit root_path
+end
+
 When (/^I select a grade level$/) do
-  # res = page.find("input[id='elem']")
-  # res.set(true)
-  # page.find_by_id("elem").set(true)
-  check('Elementary')
+  check('elem')
 end
 
 And (/^I click Submit$/) do
   click_button("Submit")
 end
 
-Then (/^I should see a list of schools for that grade level$/) do
-  # res = page.find_all(:css, 'div.panel')
-  # # print res.length
-  # res = res.find_all('div')
-  # res.each { |r|
-  #   print r.text
-  #   puts
-  # }
-  # res = page.find_all("p", :text => /^[a-zA-Z\/]*Elem[a-zA-Z]*/)
-  # res = page.find_all("p")
-  # res = page.all(:xpath, 'a')
-  # res = page.all('.div > p:nth-child(2)', text: 'Elem/Middle')
-  # page.assert_selector('div#list > div', count: 1)
-  print res.length
-  # print School.all.select { |x| x.grade_level.downcase.include? "elem" if x.grade_level}.length
-  # assert_equal res.length, School.all.select { |x| x.grade_level.downcase.include? "elem" if x.grade_level}.length
+Then (/^I should see the one school for that grade level$/) do
+  page.assert_text("Capybara Elementary")
 end
 
 Then (/^I should see a search bar$/) do
@@ -119,24 +145,4 @@ Then(/^I should not be able to register an account$/) do
   #assert page.has_content? "Your description must be at least"
 end
 
-Given(/^There is a school in the database$/) do
-  @school = School.new do |s|
-    s.name = "Capybara High School"
-    s.address = "3401 Walnut Street"
-    s.grade_level = "high"
-    s.zipcode = "19104"
-  end
-  @school.save
-end
 
-And(/^I am on the front page$/) do
-  visit root_path
-end
-
-When (/^I click on the name of the school$/) do
-  click_link('Capybara High School')
-end
-
-Then (/^I should be directed to the school's page$/) do
-  assert page.has_content?('Capybara High School')
-end
