@@ -38,3 +38,55 @@ Then (/^I should see the 'About' page$/) do
   assert page.has_content?("The SchoolSafe application evaluates the safety of schools in the Philadelphia area.")
 end
 
+When(/^I enter all the fields of the review$/) do
+  @review = Review.new do |r|
+    r.title = "Title"
+    r.rating = 3
+    r.comment = "Hey, here's a comment!"
+  end
+  @review.save
+end
+
+Then(/^I should be able to save it to the database$/) do
+  assert_not_nil Review.first
+end
+
+When(/^I enter at least one incorrect field$/) do
+  @review = Review.new do |r|
+    r.title = "Title"
+    r.rating = 6 #rating must be less than 6
+    r.comment = "Hey, here's a comment!"
+  end
+  @review.save
+end
+
+Then(/^I should not be able to save it to the database$/) do
+  assert_equal Review.all.size, 0
+end
+
+When(/^I enter all the registration fields correctly$/) do
+  @user = User.new do |u|
+    u.name = "Ima User"
+    u.description = "Researching schools"
+  end
+  @user.save
+end
+
+Then(/^I should be able to register an account$/) do
+  assert_not_nil User.first
+end
+
+When(/^I enter at least one incorrect registration field$/) do
+  @user = User.new do |u|
+    u.name = "Ima User"
+    u.description = ""
+  end
+  @user.save
+end
+
+Then(/^I should not be able to register an account$/) do
+  assert_equal Review.all.size, 0
+  # include below addition when view is implemented
+  #assert page.has_content? "Your description must be at least"
+end
+
