@@ -98,6 +98,7 @@ When(/^I enter all the fields of the review$/) do
     r.title = "Title"
     r.rating = 3
     r.comment = "Hey, here's a comment!"
+    r.school_id = 1
   end
   @review.save
 end

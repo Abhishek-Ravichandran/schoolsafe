@@ -5,7 +5,7 @@ Feature: Validate review constraints
   I want the review fields to be validated
   
   Scenario: User can add review when all fields pass validation
-    Given I am on the homepage
+    Given I am on the main page
     When I enter all the fields of the review
     Then I should be able to save it to the database
     

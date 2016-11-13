@@ -15,7 +15,7 @@
 class User < ActiveRecord::Base
   has_many :reviews
   
-  before_save {self.email = email.downcase}
+  # before_save {self.email = email.downcase}
   
   validates :name, presence: {minimum: 5, maximum: 10,
         too_short: "Your username must be at least %{count} characters.",
