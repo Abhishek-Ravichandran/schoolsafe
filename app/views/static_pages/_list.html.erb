@@ -1,0 +1,15 @@
+<% @schools.each do |s| %>
+    <div class="panel panel-default list-elem">
+      <div class="panel-heading">
+        <%= s["name"] %>
+      </div>
+      <div class="panel-body">
+        <p>
+          <%= s["address"] %>
+        </p>
+        <p>
+          <%= s["grade_level"] %>
+        </p>
+      </div>
+    </div>
+  <% end %>
