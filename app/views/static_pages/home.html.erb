@@ -7,7 +7,7 @@
       zoom: 12,
       center: philly
     });
-    <% School.all.each do |s| %>
+    <% @schools.each do |s| %>
       var lat = <%= s["latitude"].to_f %>;
       var lng = <%= s["longitude"].to_f %>;
       var pos = {lat: lat, lng: lng};
@@ -21,35 +21,7 @@
 
 <div id="list">
   
-  <!--<div class="checkbox">-->
-  <!--  <label><input type="checkbox" value="pre">Preschool</label>-->
-  <!--</div>-->
-  <!--<div class="checkbox">-->
-  <!--  <label><input type="checkbox" value="elem">Elementary</label>-->
-  <!--</div>-->
-  <!--<div class="checkbox">-->
-  <!--  <label><input type="checkbox" value="mid">Middle</label>-->
-  <!--</div>-->
-  <!--<div class="checkbox">-->
-  <!--  <label><input type="checkbox" value="high">High</label>-->
-  <!--</div>-->
+  <%= render 'filter' %>
+  <%= render 'list' %>
   
-  <% School.all.each do |s| %>
-    <div class="panel panel-default list-elem">
-      <div class="panel-heading">
-        <%= s["name"] %>
-      </div>
-      <div class="panel-body">
-        <p>
-          <%= s["address"] %>
-        </p>
-        <p>
-          <%= s["grade_level"] %>
-        </p>
-      </div>
-    </div>
-  <% end %>
 </div>
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT0DTbOr1pJzEwQqtrY-pIR69-NZVnwtI &callback=initMap">
-</script>

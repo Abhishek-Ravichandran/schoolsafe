@@ -20,12 +20,18 @@ class AddDataToSchools < ActiveRecord::Migration
             new_record = School.new
             new_record["name"] = r["properties"]["FACIL_NAME"]
             new_record["address"] = r["properties"]["FACIL_ADDRESS"]
-              new_record["zipcode"] = r["properties"]["ZIPCODE"]
-              new_record["grade_level"] = r["properties"]["GRADE_LEVEL"]
-              new_record["school_type"] = r["properties"]["TYPE"]
-              new_record["longitude"] = r["geometry"]["coordinates"][0]
-              new_record["latitude"] = r["geometry"]["coordinates"][1]
-              new_record.save
+            new_record["zipcode"] = r["properties"]["ZIPCODE"]
+            
+            if r["properties"]["GRADE_LEVEL"] then
+              if ['elem','pre','mid', 'high'].any? { |word| r["properties"]["GRADE_LEVEL"].downcase.include? word} then
+                new_record["grade_level"] = r["properties"]["GRADE_LEVEL"]
+              end
+            end
+            
+            new_record["school_type"] = r["properties"]["TYPE"]
+            new_record["longitude"] = r["geometry"]["coordinates"][0]
+            new_record["latitude"] = r["geometry"]["coordinates"][1]
+            new_record.save
           }
       end
     end
