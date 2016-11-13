@@ -23,11 +23,54 @@ Then (/^I should see the map$/) do
 end
 
 Then (/^I should see a list of schools$/) do
-    page.find_by_id("list")
+  page.find_by_id("list")
+end
+
+When (/^I click on the name of the school$/) do
+  # res = page.find("a", text: "Henry, Charles W.")
+  # res = page.find(:xpath, '//*[@id="list"]/div[2]/div[1]/a')
+  wait_until { page.find(:xpath, '//*[@id="list"]/div[2]/div[1]/a').visible? }
+  res = page.find("div#list")
+  print res
+  # click_link(res)
+end
+
+Then (/^I should be directed to the school's page$/) do
+  # assert page.find(:xpath, '/html/body/div/div/h1').has_content?('Henry, Charles W.')
+  page.find("h1", )
+end
+
+When (/^I select a grade level$/) do
+  # res = page.find("input[id='elem']")
+  # res.set(true)
+  # page.find_by_id("elem").set(true)
+  check('Elementary')
+end
+
+And (/^I click Submit$/) do
+  click_button("Submit")
+end
+
+Then (/^I should see a list of schools for that grade level$/) do
+  # res = page.find_all(:css, 'div.panel')
+  # # print res.length
+  # res = res.find_all('div')
+  # res.each { |r|
+  #   print r.text
+  #   puts
+  # }
+  # res = page.find_all("p", :text => /^[a-zA-Z\/]*Elem[a-zA-Z]*/)
+  # res = page.find_all("p")
+  # res = page.all(:xpath, 'a')
+  # res = page.all('.div > p:nth-child(2)', text: 'Elem/Middle')
+  # page.assert_selector('div#list > div', count: 1)
+  print res.length
+  # print School.all.select { |x| x.grade_level.downcase.include? "elem" if x.grade_level}.length
+  # assert_equal res.length, School.all.select { |x| x.grade_level.downcase.include? "elem" if x.grade_level}.length
 end
 
 Then (/^I should see a search bar$/) do
-    page.find(:xpath, '//div[@class="col-sm-3 col-md-3"]/form[@role="search"]')
+    page.find('.input-group').find('input')
 end
 
 When (/^I click the 'About' link$/) do
