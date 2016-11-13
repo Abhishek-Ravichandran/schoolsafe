@@ -5,7 +5,8 @@ Feature: User can interact with list of schools on homepage
   I want to click through the school's name and address
   
   Scenario: User is directed to school page after clicking on school's name
-    Given I am on the homepage
+    Given There is a school in the database
+    And I am on the front page
     When I click on the name of the school
     Then I should be directed to the school's page
     

@@ -26,20 +26,6 @@ Then (/^I should see a list of schools$/) do
   page.find_by_id("list")
 end
 
-When (/^I click on the name of the school$/) do
-  # res = page.find("a", text: "Henry, Charles W.")
-  # res = page.find(:xpath, '//*[@id="list"]/div[2]/div[1]/a')
-  wait_until { page.find(:xpath, '//*[@id="list"]/div[2]/div[1]/a').visible? }
-  res = page.find("div#list")
-  print res
-  # click_link(res)
-end
-
-Then (/^I should be directed to the school's page$/) do
-  # assert page.find(:xpath, '/html/body/div/div/h1').has_content?('Henry, Charles W.')
-  page.find("h1", )
-end
-
 When (/^I select a grade level$/) do
   # res = page.find("input[id='elem']")
   # res.set(true)
@@ -128,8 +114,29 @@ When(/^I enter at least one incorrect registration field$/) do
 end
 
 Then(/^I should not be able to register an account$/) do
-  assert_equal Review.all.size, 0
+  assert_equal User.all.size, 0
   # include below addition when view is implemented
   #assert page.has_content? "Your description must be at least"
 end
 
+Given(/^There is a school in the database$/) do
+  @school = School.new do |s|
+    s.name = "Capybara High School"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "high"
+    s.zipcode = "19104"
+  end
+  @school.save
+end
+
+And(/^I am on the front page$/) do
+  visit root_path
+end
+
+When (/^I click on the name of the school$/) do
+  click_link('Capybara High School')
+end
+
+Then (/^I should be directed to the school's page$/) do
+  assert page.has_content?('Capybara High School')
+end
