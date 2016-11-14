@@ -28,5 +28,5 @@ class Review < ActiveRecord::Base
         too_long: "Your review cannot be longer than %{count} characters."
     }
     validates :school_id, presence: true
-    # validates :user, presence: true
+    #validates :user, presence: true
 end

@@ -16,4 +16,12 @@
 
 class School < ActiveRecord::Base
     has_many :reviews
+    
+    validates :name, presence: true
+    validates :address, presence: true
+    validates :zipcode, presence: true
+    validates :grade_level, presence: true
+    validates :school_type, presence: true
+    validates :latitude, presence: true
+    validates :longitude, presence: true
 end
