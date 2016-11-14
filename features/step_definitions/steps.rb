@@ -32,6 +32,9 @@ Given(/^There is a school in the database$/) do
     s.address = "3401 Walnut Street"
     s.grade_level = "high"
     s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
   end
   @school.save
 end
@@ -54,6 +57,9 @@ Given(/^There are two schools in the database$/) do
     s.address = "3401 Walnut Street"
     s.grade_level = "high"
     s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
   end
   @first_school.save
   @second_school = School.new do |s|
@@ -61,6 +67,9 @@ Given(/^There are two schools in the database$/) do
     s.address = "3402 Walnut Street"
     s.grade_level = "elem"
     s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
   end
   @second_school.save
 end
@@ -145,5 +154,43 @@ Then(/^I should not be able to register an account$/) do
   # include below addition when view is implemented
   #assert page.has_content? "Your description must be at least"
 end
+
+Given (/^I am on the root page$/) do
+  visit root_path
+end
+
+When (/^I enter all the school fields correctly$/) do
+  @school = School.new do |s|
+    s.name = "Rails High"
+    s.address = "1000 Ruby Lane"
+    s.zipcode = "19104"
+    s.grade_level = "High"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
+end
+
+Then(/^I should be able to create a new school$/) do
+  assert_not_nil School.first
+end
+
+When (/^I enter at least one incorrect school field$/) do
+  @school = School.new do |s|
+    s.name = "Rails High"
+    s.address = "1000 Ruby Lane"
+    s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
+end
+
+Then(/^I should not be able to create a new school$/) do
+  assert_equal School.all.size, 0
+end
+    
 
 
