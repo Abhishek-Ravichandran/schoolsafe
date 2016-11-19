@@ -51,6 +51,34 @@ Then (/^I should be directed to the school's page$/) do
   assert page.has_content?('Capybara High School')
 end
 
+And(/^I am on the new review form page$/) do
+  visit new_review_path
+end
+
+When(/^I fill in all the fields$/) do
+  fill_in('Title', :with => 'My Review')
+  fill_in('Rating', :with => 3)
+  fill_in('Comment', :with => 'Here is my comment.')
+  fill_in('School', :with => 1)
+end
+
+And(/^I click Create Review$/) do
+  click_button('Create Review')
+end
+
+Then(/^I should see "Review was successfully created."$/) do
+  assert page.has_content?("Review was successfully created.")
+end
+
+When(/^I do not fill in all the fields$/) do
+  fill_in('Title', :with => 'My Review')
+  fill_in('School', :with => 1)
+end
+
+Then(/^I should see "3 errors prohibited this review from being saved:"$/) do
+  assert page.has_content?("3 errors prohibited this review from being saved")
+end
+
 Given(/^There are two schools in the database$/) do
   @first_school = School.new do |s|
     s.name = "Capybara High School"
@@ -191,6 +219,8 @@ end
 Then(/^I should not be able to create a new school$/) do
   assert_equal School.all.size, 0
 end
+
+
     
 
 
