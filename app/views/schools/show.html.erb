@@ -5,5 +5,8 @@
   <h1><%= School.find(params[:id]).name %></h1>
 </div>
 
+<% @results.each do |r| %>
+  <p> <%= r %> </p>
+<% end %>
 
 <%= link_to 'Back', root_path %>
