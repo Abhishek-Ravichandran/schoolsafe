@@ -43,6 +43,7 @@ GEM
     arel (6.0.3)
     autoprefixer-rails (6.5.1.1)
       execjs
+    bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -216,6 +217,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bcrypt (~> 3.1.7)
   better_errors
   bootstrap-sass (= 3.3.6)
   byebug
