@@ -27,14 +27,16 @@
 #
 
 Rails.application.routes.draw do
-  resources :users
+ 
   root 'static_pages#home'
   post '/', to: 'static_pages#home'
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
   get 'login', to: 'static_pages#login'
+  get 'signup', to: 'users#new'
   
   resources :schools, only: [:index, :show]
   resources :reviews
-  
+  resources :users
+   
 end
