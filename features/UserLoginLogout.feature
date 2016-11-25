@@ -26,4 +26,12 @@ Feature: User can log in and log out of account
     And I hit the Log In button
     Then I should see "Invalid email or password combination".
     
+  Scenario: Once logged in, user can log out
+    Given There is a registered user account
+    And The user is logged in
+    When I click the 'Log out' button
+    And I wait 3 seconds
+    Then I should see the homepage
+    And I should be logged out
+    
 

@@ -300,6 +300,29 @@ Then (/^I should see "Invalid email or password combination".$/) do
   assert page.has_content? "password combination"
 end
 
+And (/^The user is logged in$/) do
+  visit login_path
+  fill_in('Email', :with => @user.email)
+  fill_in('Password', :with => 'ikillallthebugs')
+  click_button('Log in')
+  sleep(3)
+end
+
+When (/^I click the 'Log out' button$/) do
+  click_link('Account')
+  click_link('Log out')
+end
+
+Then (/^I should see the homepage$/) do
+  assert page.has_content? "Home"
+end
+
+And (/^I should be logged out$/) do
+  assert page.has_no_link? "Account"
+end
+  
+  
+
 
     
 
