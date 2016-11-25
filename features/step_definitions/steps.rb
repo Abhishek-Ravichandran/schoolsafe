@@ -220,6 +220,38 @@ Then(/^I should not be able to create a new school$/) do
   assert_equal School.all.size, 0
 end
 
+Given (/^I am on the new account page$/) do
+  visit signup_path
+end
+
+When (/^I enter all the signup fields correctly$/) do
+  fill_in('Name', :with => 'Benjamin Franklin')
+  fill_in('Description', :with => 'Gonna post some reviews of schools.')
+  fill_in('Email', :with => 'bennyfranks@gmail.com')
+  fill_in('Password', :with => 'upennisthebest')
+  fill_in('Confirmation', :with => 'upennisthebest')
+end
+
+When (/^I don't enter all the signup fields correctly$/) do
+  fill_in('Name', :with => 'Benjamin Franklin')
+  fill_in('Description', :with => 'Gonna post some reviews of schools.')
+  fill_in('Email', :with => 'bennyfranks@@gmail..com')
+  fill_in('Password', :with => 'upennisthebest')
+  fill_in('Confirmation', :with => 'upennisthebest')
+end
+
+And (/^I click the Create User button$/) do
+  click_button('Create my account')
+end
+
+Then (/^I should be able to create an account$/) do
+  assert page.has_content? 'User was successfully created.'
+end
+
+Then (/^I should see an error on the page$/) do
+  assert page.has_content? "error"
+end
+
 
     
 

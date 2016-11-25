@@ -20,18 +20,18 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :image %><br>
-    <%= f.text_field :image %>
+    <%= f.label :email %><br>
+    <%= f.email_field :email %>
   </div>
   <div class="field">
-    <%= f.label :review_id %><br>
-    <%= f.text_field :review_id %>
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
   </div>
   <div class="field">
-    <%= f.label :school_id %><br>
-    <%= f.text_field :school_id %>
+    <%= f.label :password_confirmation, "Confirmation" %><br>
+    <%= f.password_field :password_confirmation %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Create my account" %>
   </div>
 <% end %>
