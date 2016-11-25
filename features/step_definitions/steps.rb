@@ -225,19 +225,19 @@ Given (/^I am on the new account page$/) do
 end
 
 When (/^I enter all the signup fields correctly$/) do
-  fill_in('Name', :with => 'Benjamin Franklin')
-  fill_in('Description', :with => 'Gonna post some reviews of schools.')
-  fill_in('Email', :with => 'bennyfranks@gmail.com')
-  fill_in('Password', :with => 'upennisthebest')
-  fill_in('Confirmation', :with => 'upennisthebest')
+  fill_in('Name', :with => 'Ada Lovelace')
+  fill_in('Description', :with => 'Countess of Lovelace and first programmer.')
+  fill_in('Email', :with => 'lovelace@gmail.com')
+  fill_in('Password', :with => 'mathandpoetryarelife')
+  fill_in('Confirmation', :with => 'mathandpoetryarelife')
 end
 
 When (/^I don't enter all the signup fields correctly$/) do
-  fill_in('Name', :with => 'Benjamin Franklin')
-  fill_in('Description', :with => 'Gonna post some reviews of schools.')
-  fill_in('Email', :with => 'bennyfranks@@gmail..com')
-  fill_in('Password', :with => 'upennisthebest')
-  fill_in('Confirmation', :with => 'upennisthebest')
+  fill_in('Name', :with => 'Ada Lovelace')
+  fill_in('Description', :with => 'Countess of Lovelace and first programmer.')
+  fill_in('Email', :with => 'lovelace@@gmail..com')
+  fill_in('Password', :with => 'mathandpoetryarelife')
+  fill_in('Confirmation', :with => 'mathandpoetryarelife')
 end
 
 And (/^I click the Create User button$/) do
@@ -250,6 +250,54 @@ end
 
 Then (/^I should see an error on the page$/) do
   assert page.has_content? "error"
+end
+
+Given (/^There is a registered user account$/) do
+  @user = User.new do |u|
+    u.name = "Grace"
+    u.description = "Inventor of the first programming language compiler"
+    u.email = "grace@hopper.com"
+    u.password = "ikillallthebugs"
+    u.password_confirmation = "ikillallthebugs"
+  end
+  @user.save
+end
+
+And (/^I am on the login page$/) do
+  visit login_path
+end
+
+When (/^I enter my email and password correctly$/) do
+  fill_in('Email', :with => @user.email)
+  fill_in('Password', :with => 'ikillallthebugs')
+end
+
+When (/^I enter my email incorrectly and my password correctly$/) do
+  fill_in('Email', :with => 'grace@hooper.com')
+  fill_in('Password', :with => 'ikillallthebugs')
+end
+
+When (/^I enter my email correctly and my password incorrectly$/) do
+  fill_in('Email', :with => 'grace@hopper.com')
+  fill_in('Password', :with => 'bugsbugseverywhere')
+end
+
+And (/^I hit the Log In button$/) do
+  click_button('Log in')
+end
+
+And (/^I wait 3 seconds$/) do
+  sleep(3)
+end
+
+Then (/^I should see my profile page$/) do
+  puts page.title
+  assert page.has_content? @user.name
+end
+
+Then (/^I should see "Invalid email or password combination".$/) do
+  assert page.has_content? "Invalid email"
+  assert page.has_content? "password combination"
 end
 
 
