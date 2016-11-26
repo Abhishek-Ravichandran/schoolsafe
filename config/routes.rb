@@ -1,7 +1,16 @@
 # == Route Map
 #
 #       Prefix Verb   URI Pattern                 Controller#Action
+#         root GET    /                           static_pages#home
+#              POST   /                           static_pages#home
+#        about GET    /about(.:format)            static_pages#about
+#      contact GET    /contact(.:format)          static_pages#contact
+#       signup GET    /signup(.:format)           users#new
+#              POST   /signup(.:format)           users#create
 # sessions_new GET    /sessions/new(.:format)     sessions#new
+#        login GET    /login(.:format)            sessions#new
+#              POST   /login(.:format)            sessions#create
+#       logout DELETE /logout(.:format)           sessions#destroy
 #      schools GET    /schools(.:format)          schools#index
 #       school GET    /schools/:id(.:format)      schools#show
 #      reviews GET    /reviews(.:format)          reviews#index
@@ -20,16 +29,6 @@
 #              PATCH  /users/:id(.:format)        users#update
 #              PUT    /users/:id(.:format)        users#update
 #              DELETE /users/:id(.:format)        users#destroy
-#         root GET    /                           static_pages#home
-#              POST   /                           static_pages#home
-#        about GET    /about(.:format)            static_pages#about
-#      contact GET    /contact(.:format)          static_pages#contact
-#        login GET    /login(.:format)            static_pages#login
-#       signup GET    /signup(.:format)           users#new
-#              POST   /signup(.:format)           users#create
-#              GET    /login(.:format)            sessions#new
-#              POST   /login(.:format)            sessions#create
-#       logout DELETE /logout(.:format)           sessions#destroy
 #
 
 Rails.application.routes.draw do

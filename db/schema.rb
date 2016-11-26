@@ -11,20 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122030759) do
+ActiveRecord::Schema.define(version: 20161126020042) do
 
   create_table "reviews", force: :cascade do |t|
     t.string   "title"
     t.integer  "rating"
     t.text     "comment"
     t.integer  "school_id"
-    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   add_index "reviews", ["school_id"], name: "index_reviews_on_school_id"
-  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"
@@ -48,6 +47,7 @@ ActiveRecord::Schema.define(version: 20161122030759) do
     t.datetime "updated_at",      null: false
     t.string   "email"
     t.string   "password_digest"
+    t.string   "remember_digest"
   end
 
   add_index "users", ["review_id"], name: "index_users_on_review_id"

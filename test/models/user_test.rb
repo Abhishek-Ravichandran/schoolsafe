@@ -12,6 +12,7 @@
 #  updated_at      :datetime         not null
 #  email           :string
 #  password_digest :string
+#  remember_digest :string
 #
 
 require 'test_helper'
