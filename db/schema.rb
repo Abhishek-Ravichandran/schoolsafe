@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161112171656) do
+ActiveRecord::Schema.define(version: 20161122030759) do
 
   create_table "reviews", force: :cascade do |t|
     t.string   "title"
@@ -44,8 +44,10 @@ ActiveRecord::Schema.define(version: 20161112171656) do
     t.binary   "image"
     t.integer  "review_id"
     t.integer  "school_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "email"
+    t.string   "password_digest"
   end
 
   add_index "users", ["review_id"], name: "index_users_on_review_id"
