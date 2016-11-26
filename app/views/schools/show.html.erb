@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
-
 <%- model_class = School -%>
+<% @school = School.find(params[:id]) %>
 <div class="page-header">
-  <h1><%= School.find(params[:id]).name %></h1>
+    <h1><%= School.find(params[:id]).name %></h1>
+</div>
+<div class="review-button">
+    <% if logged_in? %>
+        <%= link_to "Post a Review", new_school_review_path(@school), class: "btn btn-primary" %>
+    <% end %>
 </div>
 
 

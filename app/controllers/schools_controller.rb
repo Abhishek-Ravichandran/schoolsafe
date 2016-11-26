@@ -11,7 +11,7 @@ class SchoolsController < ApplicationController
   # GET /schools/1.json
   def show
   end
-
+  
   # GET /schools/new
   def new
     @school = School.new

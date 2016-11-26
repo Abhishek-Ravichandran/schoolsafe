@@ -53,15 +53,24 @@ Then (/^I should be directed to the school's page$/) do
   assert page.has_content?('Capybara High School')
 end
 
-And(/^I am on the new review form page$/) do
-  visit new_review_path
+When (/^I click the 'Post a Review' button$/) do
+  click_link "Post a Review"
 end
+
+And (/^I should see a form to post a review$/) do
+  assert page.has_content? "New Review"
+end
+
+# And(/^I am on the new review form page$/) do
+#   visit new_review_path
+# end
 
 When(/^I fill in all the fields$/) do
   fill_in('Title', :with => 'My Review')
   fill_in('Rating', :with => 3)
   fill_in('Comment', :with => 'Here is my comment.')
-  fill_in('School', :with => 1)
+  fill_in('School', :with => @school.id)
+  fill_in('User', :with => @user.id)
 end
 
 And(/^I click Create Review$/) do
@@ -69,16 +78,15 @@ And(/^I click Create Review$/) do
 end
 
 Then(/^I should see "Review was successfully created."$/) do
-  assert page.has_content?("Review was successfully created.")
+  assert page.has_content? "Review was successfully created."
 end
 
 When(/^I do not fill in all the fields$/) do
   fill_in('Title', :with => 'My Review')
-  fill_in('School', :with => 1)
 end
 
-Then(/^I should see "3 errors prohibited this review from being saved:"$/) do
-  assert page.has_content?("3 errors prohibited this review from being saved")
+Then(/^I should see "prohibited this review from being saved:"$/) do
+  assert page.has_content?("prohibited this review from being saved")
 end
 
 Given(/^There are two schools in the database$/) do
