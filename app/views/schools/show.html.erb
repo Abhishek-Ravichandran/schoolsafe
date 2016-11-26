@@ -5,5 +5,13 @@
   <h1><%= School.find(params[:id]).name %></h1>
 </div>
 
+<div class="crimes_map">
+  <%= render partial: 'crimesmap', locals: {results: @results} %>
+</div>
 
-<%= link_to 'Back', root_path %>
+
+<div id="crimes-list">
+  <%= render partial: 'crimes', locals: {results: @results} %>
+</div>
+
+

@@ -10,6 +10,10 @@ class SchoolsController < ApplicationController
   # GET /schools/1
   # GET /schools/1.json
   def show
+    client = SODA::Client.new({:domain => "data.phila.gov", :app_token => "A2UU0wuMdd6NOSuwVvjSu5i3u"})
+    lat = School.find(params[:id]).latitude
+    long = School.find(params[:id]).longitude
+    @results = client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 100)"})
   end
 
   # GET /schools/new
