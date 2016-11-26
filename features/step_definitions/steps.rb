@@ -1,3 +1,5 @@
+World(ShowMeTheCookies)
+
 Given(/^I am on the homepage$/) do
   visit root_path
 end
@@ -278,16 +280,16 @@ end
 
 When (/^I enter my email and password correctly$/) do
   fill_in('Email', :with => @user.email)
-  fill_in('Password', :with => 'ikillallthebugs')
+  fill_in('Password', :with => @user.password)
 end
 
 When (/^I enter my email incorrectly and my password correctly$/) do
   fill_in('Email', :with => 'grace@hooper.com')
-  fill_in('Password', :with => 'ikillallthebugs')
+  fill_in('Password', :with => @user.password)
 end
 
 When (/^I enter my email correctly and my password incorrectly$/) do
-  fill_in('Email', :with => 'grace@hopper.com')
+  fill_in('Email', :with => @user.email)
   fill_in('Password', :with => 'bugsbugseverywhere')
 end
 
@@ -300,7 +302,6 @@ And (/^I wait 3 seconds$/) do
 end
 
 Then (/^I should see my profile page$/) do
-  puts page.title
   assert page.has_content? @user.name
 end
 
@@ -312,7 +313,7 @@ end
 And (/^The user is logged in$/) do
   visit login_path
   fill_in('Email', :with => @user.email)
-  fill_in('Password', :with => 'ikillallthebugs')
+  fill_in('Password', :with => @user.password)
   click_button('Log in')
   sleep(3)
 end
@@ -320,6 +321,23 @@ end
 When (/^I click the 'Log out' button$/) do
   click_link('Account')
   click_link('Log out')
+end
+
+And (/^I check 'Remember me'$/) do
+  check(find("input[type='checkbox']")[:session_remember_me])
+end
+
+And (/^the browser should remember my credentials$/) do
+  credentials = show_me_the_cookie('remember_token')
+  assert_not_nil credentials
+end
+
+And (/^I do not check 'Remember me'$/) do
+end
+
+Then (/^The browser should not remember my credentials$/) do
+  credentials = show_me_the_cookie('remember_token')
+  assert_not_nil credentials
 end
 
 Then (/^I should see the homepage$/) do

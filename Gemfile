@@ -53,6 +53,7 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'show_me_the_cookies'
 end
 
 group :development do
