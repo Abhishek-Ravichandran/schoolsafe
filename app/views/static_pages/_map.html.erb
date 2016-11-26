@@ -18,6 +18,41 @@
               zoom: zoom_level,
               center: centerPos
         });
+        
+        var gmInput = document.getElementById('map-input');
+        var searchBox = new google.maps.places.SearchBox(gmInput);
+        
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+        
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+          if (places.length == 0) {
+            return;
+          }
+          var pl = places[0];
+          var pl_coords = pl.geometry.location;
+          
+          var bounds = map.getBounds();
+          var ne = bounds.getNorthEast(); // LatLng of the north-east corner
+          var sw = bounds.getSouthWest(); // LatLng of the south-west corner
+          var zoomlevel = 17;
+          var pre = "0", elem = "0", mid = "0", high = "0";
+          if(document.getElementById('static_pages_pre').checked)
+            pre = "1";
+          if(document.getElementById('static_pages_elem').checked)
+            elem = "1";
+          if(document.getElementById('static_pages_mid').checked)
+            mid = "1";
+          if(document.getElementById('static_pages_high').checked)
+            high = "1";
+          $.ajax({
+            type: "POST",
+            url: '/filter',
+            data: {chkbox_state: {'pre': pre, 'elem': elem, 'mid': mid, 'high': high}, bounds: {lat_max: ne.lat(), lat_min: sw.lat(), lng_min: sw.lng(), lng_max: ne.lng(), center_lat: pl_coords.lat(), center_lng: pl_coords.lng(), zoom_level: zoomlevel}}
+          });
+        });
        
         google.maps.event.addListener(map, 'idle', function(ev){
           var bounds = map.getBounds();
