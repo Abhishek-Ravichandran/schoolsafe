@@ -1,0 +1,8 @@
+<% @results.each do |r| %>
+    <div class="panel panel-default crime-list-elem">
+      <div class="panel-body">
+        <%= r["dispatch_date"] %>  | 
+        <%= r["text_general_code"] %>
+      </div>
+    </div>
+<% end %>

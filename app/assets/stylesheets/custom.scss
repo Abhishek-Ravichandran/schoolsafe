@@ -84,6 +84,16 @@ p {
   padding-top: 3%;
 }
 
+#crimes-list {
+  float: left;
+  width: 25%;
+  display: block;
+  overflow: auto;
+  height: 50%;
+  border:1px solid #ccc;
+  margin-left: 10%;
+}
+
 .list-elem {
   margin-left: 10%; 
   margin-bottom: 5%;
