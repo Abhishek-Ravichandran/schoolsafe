@@ -1,0 +1,54 @@
+<div id="map"></div>
+<script type="text/javascript"> 
+    (function initMap() {
+        console.log(map);
+        document.getElementById('map').style.height = String(document.getElementsByClassName('container fill')[0].offsetHeight) + "px";
+        
+        var centerPos = {lat: 40.0048632, lng: -75.1880722};
+        var zoom_level = 12;
+        
+        <% if params.key? :bounds then %>
+          <% if params[:bounds].key? :center_lat then %>
+            centerPos = {lat: <%= params["bounds"]["center_lat"].to_f %>, lng: <%= params["bounds"]["center_lng"].to_f %>};
+            zoom_level = <%= params["bounds"]["zoom_level"].to_i %>;
+          <% end %>
+        <% end %>
+        
+        map = new google.maps.Map(document.getElementById('map'), {
+              zoom: zoom_level,
+              center: centerPos
+        });
+       
+        google.maps.event.addListener(map, 'idle', function(ev){
+          var bounds = map.getBounds();
+          var ne = bounds.getNorthEast(); // LatLng of the north-east corner
+          var sw = bounds.getSouthWest(); // LatLng of the south-west corner
+          var center = map.getCenter();
+          var zoomlevel = map.getZoom();
+          var pre = "0", elem = "0", mid = "0", high = "0";
+          if(document.getElementById('static_pages_pre').checked)
+            pre = "1";
+          if(document.getElementById('static_pages_elem').checked)
+            elem = "1";
+          if(document.getElementById('static_pages_mid').checked)
+            mid = "1";
+          if(document.getElementById('static_pages_high').checked)
+            high = "1";
+          $.ajax({
+            type: "POST",
+            url: '/mapchange',
+            data: {chkbox_state: {'pre': pre, 'elem': elem, 'mid': mid, 'high': high}, bounds: {lat_max: ne.lat(), lat_min: sw.lat(), lng_min: sw.lng(), lng_max: ne.lng(), center_lat: center.lat(), center_lng: center.lng(), zoom_level: zoomlevel}}
+          });
+        });
+        
+        <% schools.each do |s| %>
+          var lat = <%= s["latitude"].to_f %>;
+          var lng = <%= s["longitude"].to_f %>;
+          var pos = {lat: lat, lng: lng};
+          var marker = new google.maps.Marker({
+          position: pos,
+          map: map
+          });
+        <% end %>
+    })();
+</script>
