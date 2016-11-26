@@ -28,8 +28,9 @@
 
 Rails.application.routes.draw do
   resources :users
-  root 'static_pages#home'
-  post '/', to: 'static_pages#home'
+  get '/', to: 'static_pages#home', :as => 'root'
+  post 'filter', to: 'static_pages#filter'
+  post 'mapchange', to: 'static_pages#mapchange'
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
   get 'login', to: 'static_pages#login'

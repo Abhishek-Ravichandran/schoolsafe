@@ -1,23 +1,44 @@
 <div class="filters">
-<%= form_for(:static_pages, url: root_path) do |f| %>
-    <div class="checkbox school-filter">
-        <%= check_box_tag(:pre) %>
-        <%= label_tag(:pre, "Preschool") %>
+<%= form_for(:static_pages, url: filter_path, remote: true) do |f| %>
+    <div class="checkbox-inline">
+        <%= f.check_box :pre, onchange: "form_submit();"%>
+        <%= f.label "Preschool" %>
     </div>
-    <div class="checkbox school-filter">
-        <%= check_box_tag(:elem) %>
-        <%= label_tag(:elem, "Elementary") %>
+    <div class="checkbox-inline">
+        <%= f.check_box :elem, onchange: "form_submit();" %>
+        <%= f.label "Elementary"%>
     </div>
-    <div class="checkbox school-filter">
-        <%= check_box_tag(:mid) %>
-        <%= label_tag(:mid, "Middle") %>
+    <div class="checkbox-inline">
+        <%= f.check_box :mid, onchange: "form_submit();" %>
+        <%= f.label "Middle"%>
     </div>
-    <div class="checkbox school-filter">
-        <%= check_box_tag(:high) %>
-        <%= label_tag(:pre, "High") %>
+    <div class="checkbox-inline">
+        <%= f.check_box :high, onchange: "form_submit();" %>
+        <%= f.label "High"%>
     </div>
-
-    <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>
 </div>
+<script>
+    function form_submit() {
+        var bounds = map.getBounds();
+        var ne = bounds.getNorthEast(); // LatLng of the north-east corner
+        var sw = bounds.getSouthWest(); // LatLng of the south-west corner
+        var center = map.getCenter();
+        var zoomlevel = map.getZoom();
+        var pre = "0", elem = "0", mid = "0", high = "0";
+        if(document.getElementById('static_pages_pre').checked)
+            pre = "1";
+        if(document.getElementById('static_pages_elem').checked)
+            elem = "1";
+        if(document.getElementById('static_pages_mid').checked)
+            mid = "1";
+        if(document.getElementById('static_pages_high').checked)
+            high = "1";
+        $.ajax({
+            type: "POST",
+            url: '/filter',
+            data: {chkbox_state: {'pre': pre, 'elem': elem, 'mid': mid, 'high': high}, bounds: {lat_max: ne.lat(), lat_min: sw.lat(), lng_min: sw.lng(), lng_max: ne.lng(), center_lat: center.lat(), center_lng: center.lng(), zoom_level: zoomlevel}}
+        });
+    }
+</script>
 
