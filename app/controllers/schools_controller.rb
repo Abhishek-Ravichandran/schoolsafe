@@ -15,7 +15,7 @@ class SchoolsController < ApplicationController
     long = School.find(params[:id]).longitude
     @results = client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 100)"})
   end
-
+  
   # GET /schools/new
   def new
     @school = School.new

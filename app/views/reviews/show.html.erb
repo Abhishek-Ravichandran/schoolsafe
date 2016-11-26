@@ -4,10 +4,7 @@
   <h3><%= Review.find(params[:id]).title %></h3>
   <p><%= Review.find(params[:id]).rating %></p>
   <p><%= Review.find(params[:id]).comment %></p>
-  <% @school = Review.find(params[:id]).school_id %>
-  <p><%= School.find(@school).name %></p>
 
-  
 
 </div>
 
