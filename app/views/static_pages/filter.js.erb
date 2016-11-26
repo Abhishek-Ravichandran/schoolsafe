@@ -1,0 +1,2 @@
+$("#list_elems").html("<%= escape_javascript(render partial: 'list', locals: { schools: @schools }) %> ");
+$("#map_part").html("<%= escape_javascript(render partial: 'map', locals: { schools: @schools }) %> ");

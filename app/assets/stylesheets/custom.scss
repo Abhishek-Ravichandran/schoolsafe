@@ -63,17 +63,10 @@ p {
   padding-right: 0px;
 }
 
-// #map {
-//     height: 100%;
-//     min-height: 100%;
-//     position: fixed;
-// }
-
 #map {
   float:left;
   display:block;
   overflow-y:auto;
-  height:100%;
   width:75%;
 }
 
@@ -112,6 +105,8 @@ html, body {
 .filters {
   text-align: left;
   margin-left: 10%;
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
 
 .review_field, .review_actions {
