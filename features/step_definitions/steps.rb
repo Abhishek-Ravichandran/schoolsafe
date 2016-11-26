@@ -220,7 +220,27 @@ Then(/^I should not be able to create a new school$/) do
   assert_equal School.all.size, 0
 end
 
+Then(/^show me the page$/) do
+  sleep 5
+  print page.html
+end
 
-    
+Then (/^find the school$/) do
+  page.find('a', text: 'The Workshop School')
+end
 
+When (/^I search for "New York"$/) do
+  page.find('#map-input').set "New York"
+end
 
+Then (/^I should see the results$/) do
+  page.has_selector?('div.pac-item span', text: 'NY, United States')
+end
+
+When (/^I search for a school$/) do
+  page.find('#map-input').set "Universal Creighton Charter School"
+end
+
+Then (/^I should find the school$/) do
+  page.has_selector?('div.pac-item span', text: 'Tabor Avenue, Philadelphia, PA, United States')
+end
