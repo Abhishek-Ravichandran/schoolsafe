@@ -17,6 +17,9 @@ class SchoolsController < ApplicationController
 
     respond_to do |format|
         format.js
+        format.html do
+          redirect_to '/'
+        end
     end
   end
   
