@@ -20,7 +20,6 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
-  padding-top: 30px;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -29,9 +28,14 @@ h2 {
   font-size: 1.2em;
   letter-spacing: -1px;
   margin-bottom: 30px;
-  text-align: center;
+  text-align: left;
   font-weight: normal;
   color: $gray-light;
+  margin-left: 5%;
+}
+
+h3 {
+  text-align: center;
 }
 
 p {
@@ -84,13 +88,13 @@ p {
 }
 
 #crimes-list {
-  float: left;
-  width: 25%;
   display: block;
   overflow: auto;
   height: 50%;
-  border:1px solid #ccc;
+  // border:1px solid #ccc;
   margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
 }
 
 .list-elem {
@@ -117,6 +121,20 @@ html, body {
   margin-left: 10%;
   margin-top: 10%;
   margin-bottom: 5%;
+}
+
+#crime-filters {
+  text-align: center;
+}
+
+#rangeDiv {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#radiusDiv {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .review_field, .review_actions {
@@ -164,3 +182,4 @@ html, body {
   margin-top: 45px;
   @include box_sizing;
 }
+

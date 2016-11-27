@@ -1,22 +1,28 @@
+<%= link_to "Back", root_path %>
+
 <p id="notice"><%= notice %></p>
 <%- model_class = School -%>
 <% @school = School.find(params[:id]) %>
+
 <div class="page-header">
     <h1><%= School.find(params[:id]).name %></h1>
+    <h3><%= School.find(params[:id]).grade_level %></h2>
 </div>
+
 <div class="review-button">
     <% if logged_in? %>
         <%= link_to "Post a Review", new_school_review_path(@school), class: "btn btn-primary" %>
     <% end %>
 </div>
 
-<div class="crimes_map">
-  <%= render partial: 'crimesmap', locals: {results: @results} %>
+<div id="crimes_filter" style="border-bottom: 1px solid #ccc;">
+    <%= render partial: 'crimesfilter' %>
 </div>
 
-
+<h3>List of Crimes: </h3>
 <div id="crimes-list">
-  <%= render partial: 'crimes', locals: {results: @results} %>
+  <%= render partial: 'crimes', locals: {crimes: @crimes} %>
 </div>
+
 
 

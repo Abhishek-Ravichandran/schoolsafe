@@ -2,7 +2,7 @@
   <% sid = s["id"] %>
     <div class="panel panel-default list-elem">
       <div class="panel-heading">
-        <a href=/schools/<%= sid %>><%= s["name"] %></a>
+        <%= link_to s["name"], school_path(:id => sid), :remote => true %>
       </div>
       <div class="panel-body">
         <p>

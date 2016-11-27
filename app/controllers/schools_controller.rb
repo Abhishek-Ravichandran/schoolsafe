@@ -1,6 +1,7 @@
 class SchoolsController < ApplicationController
   before_action :set_school, only: [:show, :edit, :update, :destroy]
-
+  
+  @@client = SODA::Client.new({:domain => "data.phila.gov", :app_token => "A2UU0wuMdd6NOSuwVvjSu5i3u"})
   # GET /schools
   # GET /schools.json
   def index
@@ -10,10 +11,27 @@ class SchoolsController < ApplicationController
   # GET /schools/1
   # GET /schools/1.json
   def show
-    client = SODA::Client.new({:domain => "data.phila.gov", :app_token => "A2UU0wuMdd6NOSuwVvjSu5i3u"})
     lat = School.find(params[:id]).latitude
     long = School.find(params[:id]).longitude
-    @results = client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 100)"})
+    @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 300) AND ucr_general in ('100', '200', '400', '1400', '1600', '1700', '1800', '1900', '2000', '2400', '2500') AND dispatch_date_time between '#{Time.now.year-3}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00'"})
+
+    respond_to do |format|
+        format.js
+    end
+  end
+  
+  def crimefilter
+    lat = School.find(params[:id]).latitude
+    long = School.find(params[:id]).longitude
+    classes = params[:classes].join("', '")
+    classes = "('" + classes
+    classes += "')"
+    
+    @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, #{params[:radius_val].to_i*100}) AND dispatch_date_time between '#{Time.now.year-params[:range_val].to_i}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00' AND ucr_general in #{classes}"})
+    
+    respond_to do |format|
+        format.js
+    end
   end
   
   # GET /schools/new

@@ -1,0 +1,2 @@
+$("#map_part").html("<%= escape_javascript(render partial: 'crimesmap', locals: { id: params[:id], crimes: @crimes }) %>");
+$("#crimes-list").html("<%= escape_javascript(render partial: 'crimes', locals: { crimes: @crimes }) %>");

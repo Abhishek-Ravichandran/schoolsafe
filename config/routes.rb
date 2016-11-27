@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get '/', to: 'static_pages#home', :as => 'root'
   post 'filter', to: 'static_pages#filter'
   post 'mapchange', to: 'static_pages#mapchange'
+  post 'crimefilter', to: 'schools#crimefilter'
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
   get 'signup', to: 'users#new'

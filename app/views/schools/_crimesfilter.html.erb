@@ -1,0 +1,89 @@
+<div id="crime-filters">
+    <h2>Select Crime Type(s):</h2>
+    <form>
+        <select name="crime_types" multiple onchange="filter_map();">
+          <option value="100">Homicide</option>
+          <option value="200">Rape</option>
+          <option value="400">Aggravated Assault</option>
+          <option value="1400">Vandalism</option>
+          <option value="1600">Prostitution</option>
+          <option value="1700">Other Sex Offences</option>
+          <option value="1800">Drug Violations</option>
+          <option value="1900">Gambling Violations</option>
+          <option value="2000">Offences against Family and Children</option>
+          <option value="2400">Disorderly Conduct</option>
+          <option value="2500">Vagrancy/Loitering</option>
+        </select>
+    </form>
+    <h2>Select Years of Crime Records:</h2>
+    <div id="rangeDiv">
+        <input type="range" id="rangeInput" name="rangeInput" step="1" min="1"
+max="5" defaultValue="3" onchange="filter_map();">
+        <label id="rangeText">
+    </div>
+    <h2>Select Radius of Crime Records (in m):</h2>
+    <div id="radiusDiv">
+        <input type="range" id="radiusInput" name="radiusInput" step="1" min="1"
+max="5" defaultValue="3" onchange="filter_map();">
+        <label id="radiusText">
+    </div>
+    
+</div>
+
+<script>
+
+    function filter_map() {
+        var classes = [];
+        var some = 0;
+        for(var i = 0; i < document.getElementsByName('crime_types')[0].options.length; i += 1) {
+            if(document.getElementsByName('crime_types')[0].options[i].selected) {
+                some = 1;
+                classes.push(document.getElementsByName('crime_types')[0].options[i].value);
+            }
+        }
+        if(some == 0) {
+            for(var i = 0; i < document.getElementsByName('crime_types')[0].options.length; i += 1) {
+                classes.push(document.getElementsByName('crime_types')[0].options[i].value);
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: '/crimefilter',
+            data: {'id': <%= params[:id] %>, 'radius_val': document.getElementById('radiusInput').value, 'range_val': document.getElementById('rangeInput').value, 'classes': classes}
+        });
+    }
+    
+    
+    var rangeValues = {
+        "1": "Past 1 year",
+        "2": "Past 2 years",
+        "3": "Past 3 years",
+        "4": "Past 4 years",
+        "5": "Past 5 years"
+    };
+    
+    var radiusValues = {
+        "1": "100m",
+        "2": "200m",
+        "3": "300m",
+        "4": "400m",
+        "5": "500m"
+    }
+
+    $(function () {
+        $('#rangeText').text(rangeValues[$('#rangeInput').val()]);
+
+        $('#rangeInput').on('input change', function () {
+            $('#rangeText').text(rangeValues[$(this).val()]);
+        });
+    });
+    
+    $(function () {
+
+        $('#radiusText').text(radiusValues[$('#radiusInput').val()]);
+
+        $('#radiusInput').on('input change', function () {
+            $('#radiusText').text(radiusValues[$(this).val()]);
+        });
+    });
+</script>
