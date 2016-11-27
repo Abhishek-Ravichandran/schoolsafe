@@ -1,0 +1,16 @@
+<% reviews = Review.where(:school_id => id.to_i) %>
+<% if reviews.length == 0 then %>
+    <div class="alert alert-danger" style="margin-top: 20%; text-align: center">
+      There are no reviews for this school yet!
+    </div>
+<% else %>
+    <h3>List of Reviews: </h3>
+    <ul class="list-group">
+    <% reviews.find_each do |r| %>
+       <li class="list-group-item">
+          <%= r["title"] %>  | 
+          <%= r["comment"] %>
+        </li>
+    <% end %>
+    </ul>
+<% end %>

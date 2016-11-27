@@ -1,8 +1,15 @@
-<ul class="list-group">
-<% crimes.each do |r| %>
+<% if crimes.length == 0 then %>
+  <div class="alert alert-danger" style="margin-top: 10%; text-align: center">
+      No crimes found!
+  </div>
+<% else %>
+  <h3 style="margin-bottom: 5%">List of Crimes: </h3>
+  <ul class="list-group" style="margin-bottom: 10%">
+  <% crimes.each do |r| %>
     <li class="list-group-item">
       <%= r["dispatch_date"] %>  | 
       <%= r["text_general_code"] %>
     </li>
+  <% end %>
+  </ul>
 <% end %>
-</ul>

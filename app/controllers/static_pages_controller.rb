@@ -19,6 +19,9 @@ class StaticPagesController < ApplicationController
         @schools += School.all.select { |x| x.grade_level.downcase.include? k if x.grade_level}
       end
     }
+    
+    @schools = @schools.uniq
+    
     @schools = School.all if some == 0
 
     respond_to do |format|
@@ -35,6 +38,9 @@ class StaticPagesController < ApplicationController
         @schools += School.all.select { |x| x.grade_level.downcase.include? k if x.grade_level}
       end
     }
+    
+    @schools = @schools.uniq
+    
     @schools = School.all if some == 0
     
     @schools = @schools.select { |s|
