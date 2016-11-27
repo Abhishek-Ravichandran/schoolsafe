@@ -51,6 +51,7 @@ end
 
 Then (/^I should be directed to the school's page$/) do
   assert page.has_content?('Capybara High School')
+  assert page.has_content?('Post a Review')
 end
 
 When (/^I click the 'Post a Review' button$/) do
@@ -69,8 +70,6 @@ When(/^I fill in all the fields$/) do
   fill_in('Title', :with => 'My Review')
   fill_in('Rating', :with => 3)
   fill_in('Comment', :with => 'Here is my comment.')
-  fill_in('School', :with => @school.id)
-  fill_in('User', :with => @user.id)
 end
 
 And(/^I click Create Review$/) do
@@ -501,3 +500,22 @@ end
 #   page.assert_selector('marker', :count => num_schools)
 # end
 
+When (/^I click 'Account'$/) do
+  click_link 'Account'
+end
+
+And (/^I click 'Profile'$/) do
+  click_link 'Profile'
+end
+
+And (/^I click 'Logout'$/) do
+  click_link 'Log out'
+end
+
+Then (/^I should not see 'Account'$/) do
+  assert page.has_no_link? 'Account'
+end
+
+And (/^I should not see 'Profile'$/) do
+  assert page.has_no_link? 'Profile'
+end
