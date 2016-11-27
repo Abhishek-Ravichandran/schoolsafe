@@ -7,9 +7,9 @@ Feature: User can interact with list of schools on homepage
   @javascript
   Scenario: User is directed to school page after clicking on school's name
     Given There is a school in the database
-    And I am on the front page
-    Then show me the page
+    And I am on the homepage
     When I click on the name of the school
+    And I wait 3 seconds
     Then I should be directed to the school's page
     
   Scenario: Map pans to school's pin when user clicks on school's address
