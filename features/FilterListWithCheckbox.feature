@@ -50,7 +50,8 @@ Feature: User can filter the list of schools using the checkboxes
     And I check 'Middle'
     And I wait 3 seconds
     Then I only see elementary and middle schools in the list and map
-    
+  
+  @javascript
   Scenario: User clicks Elementary checkbox and does not see middle/high schools
     Given I am on the homepage
     And There is an elementary school in the database
@@ -58,4 +59,4 @@ Feature: User can filter the list of schools using the checkboxes
     And There is a high school in the database
     When I check 'Elementary'
     And I wait 3 seconds
-    Then I only see the elementary school in the list
+    Then I only see elementary schools in the list and map

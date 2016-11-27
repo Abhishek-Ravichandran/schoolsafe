@@ -490,18 +490,9 @@ end
 Then (/^I only see elementary and middle schools in the list and map$/) do
   num_elemmid_schools = School.all.select {|s| s['grade_level'].downcase.include? "elem" && "mid"}.size
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
-  print page.html
   assert(number_of_markers == num_elemmid_schools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => num_elemmid_schools)
 end
-
-
-# Then (/^The list should show only those schools that are within the map bounds$/) do
-#   # map.getBounds().contains(marker.getPosition());
-#   # num_schools = School.all.select {|s| map.getBounds().contains(s.pos); }.size
-#   puts map.getBounds()
-#   page.assert_selector('marker', :count => num_schools)
-# end
 
 When (/^I click 'Account'$/) do
   click_link 'Account'
@@ -544,4 +535,50 @@ end
 Then (/^The map should center on that school$/) do
   sleep 1
   page.find(:xpath, '//*[@id="map"]/div/div/div[2]/a')[:href].include?('ll=39.952975,-75.191361')
+end
+
+And (/^I am on the school page$/) do
+  visit root_path
+  click_link('Capybara High School')
+end
+
+Then(/^only Assault crimes appear in the list and map$/) do
+  sleep 3
+  list = Array.new
+  list = find('#crimes-list ul').all('li')
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
+  assert(number_of_markers == 8, "This was expected to be true")
+  assert(list.size == 8, "This was expected to be true")
+end
+
+When (/^I select "Aggravated Assault"$/) do
+  page.select 'Aggravated Assault', from: 'crime_types'
+end
+
+When (/^I select "past 1 year"$/) do
+  page.find('#rangeInput').set 1
+  page.execute_script('$("#rangeInput").change()')
+end
+
+Then(/^only the crimes within 1 year appear in the list and map$/) do
+  sleep 3
+  list = Array.new
+  list = find('#crimes-list ul').all('li')
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
+  assert(number_of_markers == 15, "This was expected to be true")
+  assert(list.size == 15, "This was expected to be true")
+end
+
+When (/^I select "100m"$/) do
+  page.find('#radiusInput').set 1
+  page.execute_script('$("#radiusInput").change()')
+end
+
+Then(/^only the crimes within 100m appear in the list and map$/) do
+  sleep 3
+  list = Array.new
+  list = find('#crimes-list ul').all('li')
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
+  assert(number_of_markers == 9, "This was expected to be true")
+  assert(list.size == 9, "This was expected to be true")
 end
