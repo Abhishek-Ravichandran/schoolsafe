@@ -371,3 +371,50 @@ end
 Then (/^I should find the school$/) do
   page.has_selector?('div.pac-item span', text: 'Tabor Avenue, Philadelphia, PA, United States')
 end
+
+Then (/^I should see all schools in the list$/) do
+  number_of_schools = School.all.size
+  page.assert_selector('a#schools', :count => number_of_schools)
+end
+
+When (/^I check 'Preschool'$/) do
+  page.check 'static_pages_pre'
+end
+
+Then (/^I only see preschools in the list$/) do
+  num_preschools = School.all.select {|s| s[grade_level].downcase.include? "pre"}.size
+  page.assert_selector('a#schools', :count => num_preschools)
+end
+
+When (/^I check 'Elementary'$/) do
+  page.check 'static_pages_elem'
+end
+
+Then (/^I only see elementary schools in the list$/) do
+  num_elem_schools = School.all.select {|s| s[grade_level].downcase.include? "elem"}.size
+  page.assert_selector('a#schools', :count => num_elem_schools)
+end
+
+When (/^I check 'Middle'$/) do
+  page.check 'static_pages_mid'
+end
+
+Then (/^I only see middle schools in the list$/) do
+  num_mid_schools = School.all.select {|s| s[grade_level].downcase.include? "mid"}.size
+  page.assert_selector('a#schools', :count => num_mid_schools)
+end
+
+When (/^I check 'High'$/) do
+  page.check 'static_pages_mid'
+end
+
+Then (/^I only see high schools in the list$/) do
+  num_high_schools = School.all.select {|s| s[grade_level].downcase.include? "high"}.size
+  page.assert_selector('a#schools', :count => num_high_schools)
+end
+
+Then (/^I only see elementary and middle schools in the list$/) do
+  num_elemmid_schools = School.all.select {|s| s[grade_level].downcase.include? "elem" && "mid"}.size
+  page.assert_selector('a#schools', :count => num_elemmid_schools)
+end
+

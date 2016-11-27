@@ -1,8 +1,17 @@
 # == Route Map
 #
 #             Prefix Verb   URI Pattern                                    Controller#Action
+#              users GET    /users(.:format)                               users#index
+#                    POST   /users(.:format)                               users#create
+#           new_user GET    /users/new(.:format)                           users#new
+#          edit_user GET    /users/:id/edit(.:format)                      users#edit
+#               user GET    /users/:id(.:format)                           users#show
+#                    PATCH  /users/:id(.:format)                           users#update
+#                    PUT    /users/:id(.:format)                           users#update
+#                    DELETE /users/:id(.:format)                           users#destroy
 #               root GET    /                                              static_pages#home
-#                    POST   /                                              static_pages#home
+#             filter POST   /filter(.:format)                              static_pages#filter
+#          mapchange POST   /mapchange(.:format)                           static_pages#mapchange
 #              about GET    /about(.:format)                               static_pages#about
 #            contact GET    /contact(.:format)                             static_pages#contact
 #             signup GET    /signup(.:format)                              users#new
@@ -29,11 +38,11 @@
 #                    PATCH  /reviews/:id(.:format)                         reviews#update
 #                    PUT    /reviews/:id(.:format)                         reviews#update
 #                    DELETE /reviews/:id(.:format)                         reviews#destroy
-#              users GET    /users(.:format)                               users#index
+#                    GET    /users(.:format)                               users#index
 #                    POST   /users(.:format)                               users#create
-#           new_user GET    /users/new(.:format)                           users#new
-#          edit_user GET    /users/:id/edit(.:format)                      users#edit
-#               user GET    /users/:id(.:format)                           users#show
+#                    GET    /users/new(.:format)                           users#new
+#                    GET    /users/:id/edit(.:format)                      users#edit
+#                    GET    /users/:id(.:format)                           users#show
 #                    PATCH  /users/:id(.:format)                           users#update
 #                    PUT    /users/:id(.:format)                           users#update
 #                    DELETE /users/:id(.:format)                           users#destroy
