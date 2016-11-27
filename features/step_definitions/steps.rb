@@ -46,12 +46,13 @@ And(/^I am on the front page$/) do
 end
 
 When (/^I click on the name of the school$/) do
-  click_link('Capybara High School')
+  click_link @school.name
 end
 
 Then (/^I should be directed to the school's page$/) do
-  assert page.has_content?('Capybara High School')
-  assert page.has_content?('Post a Review')
+  page.find(:css, 'div#crimes_filter')
+  page.find(:css, 'div#crimes-list')
+  page.find(:css, 'div#reviews-list')
 end
 
 When (/^I click the 'Post a Review' button$/) do
@@ -145,6 +146,7 @@ When(/^I enter all the fields of the review$/) do
     r.rating = 3
     r.comment = "Hey, here's a comment!"
     r.school_id = 1
+    r.user_id = 1
   end
   @review.save
 end
@@ -170,6 +172,9 @@ When(/^I enter all the registration fields correctly$/) do
   @user = User.new do |u|
     u.name = "Ima User"
     u.description = "Researching schools"
+    u.email = "user@example.com"
+    u.password = "exampleuser"
+    u.password_confirmation = "exampleuser"
   end
   @user.save
 end
@@ -581,4 +586,43 @@ Then(/^only the crimes within 100m appear in the list and map$/) do
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
   assert(number_of_markers == 9, "This was expected to be true")
   assert(list.size == 9, "This was expected to be true")
+end
+
+And (/^There are reviews of that school in the database$/) do
+  @first_review = Review.new do |r|
+    r.title = "Review of Capybara High School"
+    r.rating = 4
+    r.comment = "CHS is a pretty good school!"
+    r.user_id = 1
+    r.school_id = 1
+  end
+  @first_review.save
+  @second_review = Review.new do |r|
+    r.title = "Another review of Capybara High School"
+    r.rating = 45
+    r.comment = "CHS is a great school!"
+    r.user_id = 1
+    r.school_id = 1
+  end
+  @second_review.save
+end
+
+And (/^I am on that school's page$/) do
+  visit root_path
+  click_link 'Capybara High School'
+  sleep(3)
+end
+
+Then (/^I can see reviews of that school on the school's page$/) do
+  page.has_content? @first_review.title
+  page.has_content? @second_review.title
+end
+
+And (/^There are no reviews of that school in the database$/) do
+  assert_nil @first_review
+  assert_nil @second_review
+end
+
+Then (/^I see a message$/) do
+  page.has_content? 'There are no reviews for this school yet!'
 end

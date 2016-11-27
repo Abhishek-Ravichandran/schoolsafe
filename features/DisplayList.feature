@@ -8,12 +8,13 @@ Feature: Display a list of schools
     Given I am on the homepage
     Then I should see a list of schools
   
-  Scenario: User can filter by grade level
-    Given There are two schools in the database
-    And I am on the main page
-    When I select a grade level
-    And I click Submit
-    Then I should see the one school for that grade level
+  # The below test is replicated in FilterListWithCheckbox.feature
+  # Scenario: User can filter by grade level
+  #   Given There are two schools in the database
+  #   And I am on the main page
+  #   When I select a grade level
+  #   And I click Submit
+  #   Then I should see the one school for that grade level
   
   # Scenario: User can search for specific school that exists
   #   Given I am on the homepage

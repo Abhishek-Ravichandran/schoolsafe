@@ -9,6 +9,7 @@ Feature: User can interact with list of schools on homepage
     Given There is a school in the database
     And I am on the front page
     When I click on the name of the school
+    And I wait 3 seconds
     Then I should be directed to the school's page
   
   @javascript
