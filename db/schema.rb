@@ -18,12 +18,13 @@ ActiveRecord::Schema.define(version: 20161126020042) do
     t.integer  "rating"
     t.text     "comment"
     t.integer  "school_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
   end
 
   add_index "reviews", ["school_id"], name: "index_reviews_on_school_id"
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20161126020042) do
     t.string   "remember_digest"
   end
 
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["review_id"], name: "index_users_on_review_id"
   add_index "users", ["school_id"], name: "index_users_on_school_id"
 

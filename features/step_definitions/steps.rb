@@ -96,8 +96,8 @@ Given(/^There are two schools in the database$/) do
     s.grade_level = "high"
     s.zipcode = "19104"
     s.school_type = "Public"
-    s.latitude = "39.952975"
-    s.longitude = "-75.191361"
+    s.latitude = "40.0048632"
+    s.longitude = "-75.1880722"
   end
   @first_school.save
   @second_school = School.new do |s|
@@ -106,8 +106,8 @@ Given(/^There are two schools in the database$/) do
     s.grade_level = "elem"
     s.zipcode = "19104"
     s.school_type = "Public"
-    s.latitude = "39.952975"
-    s.longitude = "-75.191361"
+    s.latitude = "40.0147667098845"
+    s.longitude = "-75.0874213484221"
   end
   @second_school.save
 end
@@ -372,8 +372,10 @@ Then (/^I should find the school$/) do
   page.has_selector?('div.pac-item span', text: 'Tabor Avenue, Philadelphia, PA, United States')
 end
 
-Then (/^I should see all schools in the list$/) do
+Then (/^I should see all schools in the list and map$/) do
   number_of_schools = School.all.size
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
+  assert(number_of_markers == number_of_schools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => number_of_schools)
 end
 
@@ -394,8 +396,10 @@ When (/^I check 'Preschool'$/) do
   page.check 'static_pages_pre'
 end
 
-Then (/^I only see preschools in the list$/) do
+Then (/^I only see preschools in the list and map$/) do
   num_preschools = School.all.select {|s| s['grade_level'].downcase.include? "pre"}.size
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
+  assert(number_of_markers == num_preschools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => num_preschools)
 end
 
@@ -416,8 +420,10 @@ When (/^I check 'Elementary'$/) do
   page.check 'static_pages_elem'
 end
 
-Then (/^I only see elementary schools in the list$/) do
+Then (/^I only see elementary schools in the list and map$/) do
   num_elem_schools = School.all.select {|s| s['grade_level'].downcase.include? "elem"}.size
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
+  assert(number_of_markers == num_elem_schools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => num_elem_schools)
 end
 
@@ -438,8 +444,10 @@ When (/^I check 'Middle'$/) do
   page.check 'static_pages_mid'
 end
 
-Then (/^I only see middle schools in the list$/) do
+Then (/^I only see middle schools in the list and map$/) do
   num_mid_schools = School.all.select {|s| s['grade_level'].downcase.include? "mid"}.size
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
+  assert(number_of_markers == num_mid_schools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => num_mid_schools)
 end
 
@@ -460,8 +468,10 @@ When (/^I check 'High'$/) do
   page.check 'static_pages_high'
 end
 
-Then (/^I only see high schools in the list$/) do
+Then (/^I only see high schools in the list and map$/) do
   num_high_schools = School.all.select {|s| s['grade_level'].downcase.include? "high"}.size
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
+  assert(number_of_markers == num_high_schools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => num_high_schools)
 end
 
@@ -478,16 +488,13 @@ And (/^There is an elementary-middle school in the database$/) do
   @school.save
 end
 
-Then (/^I only see elementary and middle schools in the list$/) do
+Then (/^I only see elementary and middle schools in the list and map$/) do
   num_elemmid_schools = School.all.select {|s| s['grade_level'].downcase.include? "elem" && "mid"}.size
+  number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 1
+  print page.html
+  assert(number_of_markers == num_elemmid_schools, "This was expected to be true")
   page.has_selector?('div.panel panel-default list-elem', :count => num_elemmid_schools)
 end
-
-# When (/^I zoom in on the map$/) do
-#   current_zoom = page.evaluate_script('map.getZoom();')
-#   new_zoom = current_zoom += 5
-#   page.evaluate_script('map.setZoom();')
-# end
 
 # Then (/^The list should show only those schools that are within the map bounds$/) do
 #   # map.getBounds().contains(marker.getPosition());
@@ -496,3 +503,25 @@ end
 #   page.assert_selector('marker', :count => num_schools)
 # end
 
+When (/^I zoom in$/) do
+  page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
+  sleep 1
+  page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
+end
+
+Then (/^I should see two schools in the list$/) do
+  page.assert_selector('.panel-heading', count: 2)
+end
+
+Then (/^I only see one school in the list$/) do
+  page.assert_selector('.panel-heading', count: 1)
+end
+
+Then (/^I should see the list of crimes$/) do
+  page.find('#crimes-list')
+end
+
+Then (/^The map should center on that school$/) do
+  sleep 1
+  page.find(:xpath, '//*[@id="map"]/div/div/div[2]/a')[:href].include?('ll=39.952975,-75.191361')
+end
