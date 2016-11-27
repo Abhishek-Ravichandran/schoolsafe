@@ -483,6 +483,11 @@ Then (/^I only see elementary and middle schools in the list$/) do
   page.has_selector?('div.panel panel-default list-elem', :count => num_elemmid_schools)
 end
 
+Then (/^I only see the elementary school in the list$/) do
+  num_elem_schools = School.all.select {|s| s['grade_level'].downcase.include? "elem"}.size
+  page.has_selector?('div.panel panel-default list-elem', :count => num_elem_schools)
+end
+
 # When (/^I zoom in on the map$/) do
 #   current_zoom = page.evaluate_script('map.getZoom();')
 #   new_zoom = current_zoom += 5
