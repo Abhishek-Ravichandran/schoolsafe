@@ -374,7 +374,20 @@ end
 
 Then (/^I should see all schools in the list$/) do
   number_of_schools = School.all.size
-  page.assert_selector('a#schools', :count => number_of_schools)
+  page.has_selector?('div.panel panel-default list-elem', :count => number_of_schools)
+end
+
+And (/^There is a preschool in the database$/) do
+    @school = School.new do |s|
+    s.name = "Capybara Preschool"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "pre"
+    s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
 end
 
 When (/^I check 'Preschool'$/) do
@@ -382,8 +395,21 @@ When (/^I check 'Preschool'$/) do
 end
 
 Then (/^I only see preschools in the list$/) do
-  num_preschools = School.all.select {|s| s[grade_level].downcase.include? "pre"}.size
-  page.assert_selector('a#schools', :count => num_preschools)
+  num_preschools = School.all.select {|s| s['grade_level'].downcase.include? "pre"}.size
+  page.has_selector?('div.panel panel-default list-elem', :count => num_preschools)
+end
+
+And (/^There is an elementary school in the database$/) do
+    @school = School.new do |s|
+    s.name = "Capybara Elementary"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "elem"
+    s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
 end
 
 When (/^I check 'Elementary'$/) do
@@ -391,8 +417,21 @@ When (/^I check 'Elementary'$/) do
 end
 
 Then (/^I only see elementary schools in the list$/) do
-  num_elem_schools = School.all.select {|s| s[grade_level].downcase.include? "elem"}.size
-  page.assert_selector('a#schools', :count => num_elem_schools)
+  num_elem_schools = School.all.select {|s| s['grade_level'].downcase.include? "elem"}.size
+  page.has_selector?('div.panel panel-default list-elem', :count => num_elem_schools)
+end
+
+And (/^There is a middle school in the database$/) do
+    @school = School.new do |s|
+    s.name = "Capybara Middle"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "mid"
+    s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
 end
 
 When (/^I check 'Middle'$/) do
@@ -400,21 +439,60 @@ When (/^I check 'Middle'$/) do
 end
 
 Then (/^I only see middle schools in the list$/) do
-  num_mid_schools = School.all.select {|s| s[grade_level].downcase.include? "mid"}.size
-  page.assert_selector('a#schools', :count => num_mid_schools)
+  num_mid_schools = School.all.select {|s| s['grade_level'].downcase.include? "mid"}.size
+  page.has_selector?('div.panel panel-default list-elem', :count => num_mid_schools)
+end
+
+And (/^There is a high school in the database$/) do
+  @school = School.new do |s|
+    s.name = "Capybara High School"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "high"
+    s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
 end
 
 When (/^I check 'High'$/) do
-  page.check 'static_pages_mid'
+  page.check 'static_pages_high'
 end
 
 Then (/^I only see high schools in the list$/) do
-  num_high_schools = School.all.select {|s| s[grade_level].downcase.include? "high"}.size
-  page.assert_selector('a#schools', :count => num_high_schools)
+  num_high_schools = School.all.select {|s| s['grade_level'].downcase.include? "high"}.size
+  page.has_selector?('div.panel panel-default list-elem', :count => num_high_schools)
+end
+
+And (/^There is an elementary-middle school in the database$/) do
+  @school = School.new do |s|
+    s.name = "Capybara Junior High School"
+    s.address = "3401 Walnut Street"
+    s.grade_level = "elem/mid"
+    s.zipcode = "19104"
+    s.school_type = "Public"
+    s.latitude = "39.952975"
+    s.longitude = "-75.191361"
+  end
+  @school.save
 end
 
 Then (/^I only see elementary and middle schools in the list$/) do
-  num_elemmid_schools = School.all.select {|s| s[grade_level].downcase.include? "elem" && "mid"}.size
-  page.assert_selector('a#schools', :count => num_elemmid_schools)
+  num_elemmid_schools = School.all.select {|s| s['grade_level'].downcase.include? "elem" && "mid"}.size
+  page.has_selector?('div.panel panel-default list-elem', :count => num_elemmid_schools)
 end
+
+# When (/^I zoom in on the map$/) do
+#   current_zoom = page.evaluate_script('map.getZoom();')
+#   new_zoom = current_zoom += 5
+#   page.evaluate_script('map.setZoom();')
+# end
+
+# Then (/^The list should show only those schools that are within the map bounds$/) do
+#   # map.getBounds().contains(marker.getPosition());
+#   # num_schools = School.all.select {|s| map.getBounds().contains(s.pos); }.size
+#   puts map.getBounds()
+#   page.assert_selector('marker', :count => num_schools)
+# end
 
