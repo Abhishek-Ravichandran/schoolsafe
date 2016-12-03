@@ -17,6 +17,10 @@
 
 class User < ActiveRecord::Base
   has_many :reviews
+  has_many :schools
+  has_many :favorite_schools
+  has_many :favorites, through: :favorite_schools, source: :school
+  
   attr_accessor :remember_token
   
   before_save {self.email = email.downcase}

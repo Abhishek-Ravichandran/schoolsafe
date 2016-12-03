@@ -21,6 +21,7 @@
 #                    PATCH  /schools/:school_id/reviews/:id(.:format)      reviews#update
 #                    PUT    /schools/:school_id/reviews/:id(.:format)      reviews#update
 #                    DELETE /schools/:school_id/reviews/:id(.:format)      reviews#destroy
+#    favorite_school PUT    /schools/:id/favorite(.:format)                schools#favorite
 #            schools GET    /schools(.:format)                             schools#index
 #             school GET    /schools/:id(.:format)                         schools#show
 #            reviews GET    /reviews(.:format)                             reviews#index
@@ -57,6 +58,9 @@ Rails.application.routes.draw do
   
   resources :schools, only: [:index, :show] do
     resources :reviews
+    member do
+      put 'favorite'
+    end
   end
   resources :reviews
   resources :users

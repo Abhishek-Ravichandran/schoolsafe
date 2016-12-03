@@ -18,6 +18,10 @@
 class School < ActiveRecord::Base
     has_many :reviews
     
+    belongs_to :user
+    has_many :favorite_schools
+    has_many :favorited_by, through: :favorite_schools, source: :user 
+    
     validates :name, presence: true
     validates :address, presence: true
     validates :zipcode, presence: true

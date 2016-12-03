@@ -10,6 +10,8 @@
     <div class="review-button" style= "text-align: center; margin-top: 5%">
         <% if logged_in? %>
             <%= link_to "Post a Review", new_school_review_path(@school), class: "btn btn-primary" %>
+            <%= link_to "Bookmark",   favorite_school_path(@school, type: "favorite"), method: :put %>
+            <%= link_to "Remove Bookmark", favorite_school_path(@school, type: "unfavorite"), method: :put %>
         <% end %>
     </div>
 </div>
