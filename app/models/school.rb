@@ -29,4 +29,5 @@ class School < ActiveRecord::Base
     validates :school_type, presence: true
     validates :latitude, presence: true
     validates :longitude, presence: true
+    
 end

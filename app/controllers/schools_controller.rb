@@ -41,8 +41,10 @@ class SchoolsController < ApplicationController
   # for current_user
   def favorite
     type = params[:type]
+    @school = School.find_by(params[:id])
     if type == "favorite"
       current_user.favorites << @school
+      # redirect_to '/schools/' + params[:id].to_s, notice: "You bookmarked #{@school.name}"
       redirect_to :back, notice: "You bookmarked #{@school.name}"
 
     elsif type == "unfavorite"
