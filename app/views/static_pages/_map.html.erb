@@ -79,9 +79,17 @@
           var lat = <%= s["latitude"].to_f %>;
           var lng = <%= s["longitude"].to_f %>;
           var pos = {lat: lat, lng: lng};
+          <% school_name = s["name"].gsub(/\r\n/,"") %>
+          var contentString = <%= raw("'"+(link_to school_name, school_path(:id => s["id"]), :remote => true)+"'") %>;
           var marker = new google.maps.Marker({
           position: pos,
-          map: map
+          map: map,
+          });
+          marker.info = new google.maps.InfoWindow({
+            content: contentString
+          });
+          marker.addListener('click', function() {
+            this.info.open(map, this);
           });
         <% end %>
     })();
