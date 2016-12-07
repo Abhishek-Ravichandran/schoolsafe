@@ -12,10 +12,15 @@
 #  longitude   :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :integer
 #
 
 class School < ActiveRecord::Base
     has_many :reviews
+    
+    belongs_to :user
+    has_many :favorite_schools
+    has_many :favorited_by, through: :favorite_schools, source: :user 
     
     validates :name, presence: true
     validates :address, presence: true
@@ -24,4 +29,5 @@ class School < ActiveRecord::Base
     validates :school_type, presence: true
     validates :latitude, presence: true
     validates :longitude, presence: true
+    
 end

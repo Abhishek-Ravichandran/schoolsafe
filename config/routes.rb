@@ -1,17 +1,10 @@
 # == Route Map
 #
 #             Prefix Verb   URI Pattern                                    Controller#Action
-#              users GET    /users(.:format)                               users#index
-#                    POST   /users(.:format)                               users#create
-#           new_user GET    /users/new(.:format)                           users#new
-#          edit_user GET    /users/:id/edit(.:format)                      users#edit
-#               user GET    /users/:id(.:format)                           users#show
-#                    PATCH  /users/:id(.:format)                           users#update
-#                    PUT    /users/:id(.:format)                           users#update
-#                    DELETE /users/:id(.:format)                           users#destroy
 #               root GET    /                                              static_pages#home
 #             filter POST   /filter(.:format)                              static_pages#filter
 #          mapchange POST   /mapchange(.:format)                           static_pages#mapchange
+#        crimefilter POST   /crimefilter(.:format)                         schools#crimefilter
 #              about GET    /about(.:format)                               static_pages#about
 #            contact GET    /contact(.:format)                             static_pages#contact
 #             signup GET    /signup(.:format)                              users#new
@@ -28,6 +21,7 @@
 #                    PATCH  /schools/:school_id/reviews/:id(.:format)      reviews#update
 #                    PUT    /schools/:school_id/reviews/:id(.:format)      reviews#update
 #                    DELETE /schools/:school_id/reviews/:id(.:format)      reviews#destroy
+#    favorite_school POST   /schools/:id/favorite(.:format)                schools#favorite
 #            schools GET    /schools(.:format)                             schools#index
 #             school GET    /schools/:id(.:format)                         schools#show
 #            reviews GET    /reviews(.:format)                             reviews#index
@@ -38,18 +32,17 @@
 #                    PATCH  /reviews/:id(.:format)                         reviews#update
 #                    PUT    /reviews/:id(.:format)                         reviews#update
 #                    DELETE /reviews/:id(.:format)                         reviews#destroy
-#                    GET    /users(.:format)                               users#index
+#              users GET    /users(.:format)                               users#index
 #                    POST   /users(.:format)                               users#create
-#                    GET    /users/new(.:format)                           users#new
-#                    GET    /users/:id/edit(.:format)                      users#edit
-#                    GET    /users/:id(.:format)                           users#show
+#           new_user GET    /users/new(.:format)                           users#new
+#          edit_user GET    /users/:id/edit(.:format)                      users#edit
+#               user GET    /users/:id(.:format)                           users#show
 #                    PATCH  /users/:id(.:format)                           users#update
 #                    PUT    /users/:id(.:format)                           users#update
 #                    DELETE /users/:id(.:format)                           users#destroy
 #
 
 Rails.application.routes.draw do
-  resources :users
   get '/', to: 'static_pages#home', :as => 'root'
   post 'filter', to: 'static_pages#filter'
   post 'mapchange', to: 'static_pages#mapchange'
@@ -65,6 +58,9 @@ Rails.application.routes.draw do
   
   resources :schools, only: [:index, :show] do
     resources :reviews
+    member do
+      post 'favorite'
+    end
   end
   resources :reviews
   resources :users

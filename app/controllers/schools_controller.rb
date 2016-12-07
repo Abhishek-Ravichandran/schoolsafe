@@ -37,6 +37,25 @@ class SchoolsController < ApplicationController
     end
   end
   
+  # Add and remove favorite recipes
+  # for current_user
+  def favorite
+    type = params[:type]
+    @school = School.find(params[:id])
+    if type == "favorite"
+      current_user.favorites << @school
+      redirect_to @school, notice: "You bookmarked #{@school.name}"
+
+    elsif type == "unfavorite"
+      current_user.favorites.delete(@school)
+      redirect_to @school, notice: "Removed bookmark for #{@school.name}"
+
+    else
+      # Type missing, nothing happens
+      redirect_to @school, notice: "Nothing happened."
+    end
+  end
+  
   # GET /schools/new
   def new
     @school = School.new
