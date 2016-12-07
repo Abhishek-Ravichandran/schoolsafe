@@ -41,19 +41,18 @@ class SchoolsController < ApplicationController
   # for current_user
   def favorite
     type = params[:type]
-    @school = School.find_by(params[:id])
+    @school = School.find(params[:id])
     if type == "favorite"
       current_user.favorites << @school
-      # redirect_to '/schools/' + params[:id].to_s, notice: "You bookmarked #{@school.name}"
-      redirect_to :back, notice: "You bookmarked #{@school.name}"
+      redirect_to @school, notice: "You bookmarked #{@school.name}"
 
     elsif type == "unfavorite"
       current_user.favorites.delete(@school)
-      redirect_to :back, notice: "Removed bookmark for #{@school.name}"
+      redirect_to @school, notice: "Removed bookmark for #{@school.name}"
 
     else
       # Type missing, nothing happens
-      redirect_to :back, notice: "Nothing happened."
+      redirect_to @school, notice: "Nothing happened."
     end
   end
   

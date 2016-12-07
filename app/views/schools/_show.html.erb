@@ -16,10 +16,10 @@
         <% if logged_in? %>
             <% if favorite? @school %>
                 <%= link_to "Remove Bookmark", favorite_school_path(@school, type: "unfavorite"), class: "btn btn-primary",
-                    method: :put %>
+                    method: :post %>
             <% else %>
                 <%= link_to "Bookmark", favorite_school_path(@school, type: "favorite"), class: "btn btn-primary",
-                    method: :put %>
+                    method: :post %>
             <% end %>
         <% end %>
     </div>
