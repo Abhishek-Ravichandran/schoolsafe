@@ -88,8 +88,11 @@
           marker.info = new google.maps.InfoWindow({
             content: contentString
           });
-          marker.addListener('click', function() {
+          marker.addListener('mouseover', function() {
             this.info.open(map, this);
+          });
+          marker.addListener('mouseout', function() {
+            this.info.close(map, this);
           });
         <% end %>
     })();
