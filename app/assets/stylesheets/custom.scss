@@ -20,6 +20,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
+  margin-top: 5%;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -106,6 +107,16 @@ p {
   margin-right: 10%;
 }
 
+#user-reviews-list, #user-bookmarks-list {
+  // float:right;
+  display:block;
+  overflow:auto;
+  height:50%;
+  width:90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 .list-group {
   height: 100px;
 }
@@ -150,7 +161,7 @@ html, body {
   margin-right: 10%;
 }
 
-.review_field, .review_actions {
+.review_field, .review_actions, .signup_field, .signup_actions {
   text-align: center;
 }
 
@@ -158,6 +169,7 @@ html, body {
   padding-top: 5%;
   padding-bottom: 10%;
   padding-left: 5%;
+  text-align: center;
 }
 
 .edit_and_back {

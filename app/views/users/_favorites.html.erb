@@ -1,0 +1,15 @@
+<% favorites.each do |s| %>
+  <div class="panel panel-default list-elem">
+    <div class="panel-heading">
+        <%= link_to s.name, school_path(s.id) %>
+    </div>
+    <div class="panel-body">
+        <p>
+            <%= s.grade_level %>
+        </p>
+        <p>
+            <%= s.address %>
+        </p>
+    </div>
+  </div>
+<% end %>
