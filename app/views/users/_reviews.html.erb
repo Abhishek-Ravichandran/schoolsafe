@@ -1,0 +1,19 @@
+<% reviews.each do |r| %>
+  <% @school = School.find(r.school_id) %>
+  <div class="panel panel-default list-elem">
+    <div class="panel-heading">
+        <%= link_to @school.name, school_path(@school.id) %>
+    </div>
+    <div class="panel-body">
+        <p>
+            <%= r.title %>
+        </p>
+        <p>
+            <%= r.rating %>
+        </p>
+        <p>
+            <%= r.comment %>
+        </p>
+    </div>
+  </div>
+<% end %>

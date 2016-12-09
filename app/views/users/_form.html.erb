@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="signup_field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
+  <div class="signup_field">
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
-  <div class="field">
+  <div class="signup_field">
     <%= f.label :email %><br>
     <%= f.email_field :email %>
   </div>
-  <div class="field">
+  <div class="signup_field">
     <%= f.label :password %><br>
     <%= f.password_field :password %>
   </div>
-  <div class="field">
+  <div class="signup_field">
     <%= f.label :password_confirmation, "Confirmation" %><br>
     <%= f.password_field :password_confirmation %>
   </div>
-  <div class="actions">
-    <%= f.submit "Create my account" %>
+  <div class="signup_actions" style="margin-top: 10px">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

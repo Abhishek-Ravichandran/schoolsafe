@@ -1,11 +1,12 @@
 <%- model_class = Review -%>
 <p id="notice"><%= notice %></p>
 <div class = review_page>
-  <h3><%= Review.find(params[:id]).title %></h3>
-  <p><%= Review.find(params[:id]).rating %></p>
+  <h3>Review of <%= School.find(Review.find(params[:id]).school_id).name %></h3>
+  <% @user = User.find(Review.find(params[:id]).user_id) %>
+  <h4>Submitted by <%= link_to @user.name, user_path(@user.id) %></h4>
+  <h5><%= Review.find(params[:id]).title %></h3>
+  <p><%= Review.find(params[:id]).rating %></sp>
   <p><%= Review.find(params[:id]).comment %></p>
-
-
 </div>
 
 <div class="edit_and_back">
