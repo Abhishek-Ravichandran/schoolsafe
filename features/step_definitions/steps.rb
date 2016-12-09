@@ -654,3 +654,23 @@ end
 Then (/^I should not see a Bookmark button$/) do 
   assert page.has_no_content? 'Bookmark'
 end
+
+And (/^The user has posted a review of that school$/) do
+  @review = Review.create(title: "Here's a review", 
+                          rating: 5, 
+                          comment: "This school is great!", 
+                          school_id: @school.id, 
+                          user_id: @user.id)
+end
+
+Then (/^I should see that review$/) do
+  assert page.has_content? @review.title
+  assert page.has_content? @review.rating
+  assert page.has_content? @review.comment
+end
+
+Then (/^I should see that bookmark$/) do
+  assert page.has_content? @school.name
+  assert page.has_content? @school.address
+end
+
