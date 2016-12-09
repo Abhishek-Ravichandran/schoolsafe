@@ -74,7 +74,7 @@
             data: {chkbox_state: {'pre': pre, 'elem': elem, 'mid': mid, 'high': high}, bounds: {lat_max: ne.lat(), lat_min: sw.lat(), lng_min: sw.lng(), lng_max: ne.lng(), center_lat: center.lat(), center_lng: center.lng(), zoom_level: zoomlevel}}
           });
         });
-        
+        var infowindow = new google.maps.InfoWindow();
         <% schools.each do |s| %>
           var lat = <%= s["latitude"].to_f %>;
           var lng = <%= s["longitude"].to_f %>;
@@ -88,8 +88,10 @@
           marker.info = new google.maps.InfoWindow({
             content: contentString
           });
-          marker.addListener('click', function() {
-            this.info.open(map, this);
+          marker.addListener('mouseover', function() {
+            infowindow.close();
+            infowindow = this.info;
+            infowindow.open(map, this);
           });
         <% end %>
     })();
