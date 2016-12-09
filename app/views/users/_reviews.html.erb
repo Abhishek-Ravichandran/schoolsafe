@@ -2,7 +2,7 @@
   <% @school = School.find(r.school_id) %>
   <div class="panel panel-default list-elem">
     <div class="panel-heading">
-        <%= @school.name %>
+        <%= link_to @school.name, school_path(@school.id) %>
     </div>
     <div class="panel-body">
         <p>

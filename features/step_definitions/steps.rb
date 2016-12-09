@@ -626,3 +626,31 @@ end
 Then (/^I see a message$/) do
   page.has_content? 'There are no reviews for this school yet!'
 end
+
+When (/^I click Bookmark$/) do
+  click_link 'Bookmark'
+end
+
+And (/^I navigate to my profile page$/) do
+  visit user_path(@user.id)
+end
+
+Then (/^I should see the name of that school in my list of bookmarks$/) do
+  assert page.has_content? @school.name
+end
+
+And (/^That school is in the user's favorites$/) do
+  @user.favorites << @school
+end
+
+When (/^I click Remove Bookmark$/) do
+  click_link 'Remove Bookmark'
+end
+
+Then (/^I should not see the name of that school in my list of bookmarks$/) do
+  assert page.has_no_content? @school.name
+end
+
+Then (/^I should not see a Bookmark button$/) do 
+  assert page.has_no_content? 'Bookmark'
+end

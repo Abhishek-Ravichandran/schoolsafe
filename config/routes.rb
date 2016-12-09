@@ -63,6 +63,6 @@ Rails.application.routes.draw do
     end
   end
   resources :reviews
-  resources :users
+  resources :users, except: :index
    
 end
