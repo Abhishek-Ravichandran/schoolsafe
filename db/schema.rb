@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20161203171819) do
   end
 
   add_index "reviews", ["school_id"], name: "index_reviews_on_school_id"
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 20161203171819) do
     t.string   "remember_digest"
   end
 
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["review_id"], name: "index_users_on_review_id"
   add_index "users", ["school_id"], name: "index_users_on_school_id"
 
