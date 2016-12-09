@@ -50,6 +50,29 @@ class SchoolsController < ApplicationController
     
     @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, #{params[:radius_val].to_i*100}) AND dispatch_date_time between '#{Time.now.year-params[:range_val].to_i}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00' AND ucr_general in #{classes}"})
     
+    @score = @crimes.inject(0) { |sum, c|
+      if ["100", "200"].include? c["ucr_general"] then
+        sum + 5 
+      elsif ["1700", "2000"].include? c["ucr_general"] then
+        sum + 4
+      elsif ["400", "1600", "1800"].include? c["ucr_general"] then
+        sum + 3
+      elsif ["1400", "1900"].include? c["ucr_general"] then
+        sum + 2
+      elsif ["2400", "2500"].include? c["ucr_general"] then
+        sum + 1
+      end
+    }
+    
+    if @crimes.length == 0 then
+      @score = 0
+    else
+      @score = @score.to_f / @crimes.length
+    end
+    
+    @score = 5 - @score
+    @score = @score.to_i
+
     respond_to do |format|
         format.js
     end
