@@ -27,6 +27,7 @@ gem 'therubyracer', platforms: :ruby
 
 gem 'twitter-bootstrap-rails'
 gem 'less-rails'
+gem 'gravtastic'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

@@ -107,6 +107,16 @@ p {
   margin-right: 10%;
 }
 
+#user-reviews-list, #user-bookmarks-list {
+  // float:right;
+  display:block;
+  overflow:auto;
+  height:50%;
+  width:90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 .list-group {
   height: 100px;
 }

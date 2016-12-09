@@ -16,6 +16,9 @@
 #
 
 class User < ActiveRecord::Base
+  include Gravtastic
+  is_gravtastic
+  
   has_many :reviews
   has_many :schools
   has_many :favorite_schools
