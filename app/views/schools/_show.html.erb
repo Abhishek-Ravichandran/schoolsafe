@@ -7,6 +7,17 @@
 <div class="page-header" style="margin-top: -5%">
     <h1><%= School.find(params[:id]).name %></h1>
     <h3><%= School.find(params[:id]).grade_level %></h2>
+    <h3>Safety Rating: 
+        <div> 
+            <%= 5.times do |i| %>
+                <% if i < @score %>
+                    <div class="glyphicon glyphicon-star"></div>
+                <% else %>
+                    <div class="glyphicon glyphicon-star-empty"></div>
+                <% end %>
+            <% end %>
+        </div>
+    </h3>
     <div class="review-button" style= "text-align: center; margin-top: 5%">
         <% if logged_in? %>
             <%= link_to "Post a Review", new_school_review_path(@school), class: "btn btn-primary" %>
