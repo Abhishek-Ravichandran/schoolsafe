@@ -29,6 +29,24 @@ Feature: User has a profile page when they sign up for an account
     Then I should not see 'Account'
     And I should not see 'Profile'
     
+  Scenario: A user can see reviews on their page if they've written them
+    Given There is a registered user account
+    And The user is logged in
+    And There is a school in the database
+    And The user has posted a review of that school
+    When I navigate to my profile page
+    Then I should see that review
+  
+  @javascript  
+  Scenario: A user can see bookmarks on their page if they have them
+    Given There is a registered user account
+    And The user is logged in
+    And There is a school in the database
+    And I am on that school's page
+    And I click Bookmark
+    When I navigate to my profile page
+    Then I should see that bookmark
+    
     
 
     
