@@ -8,6 +8,10 @@
     <h3>Safety Rating: 
         <div id="safety-rating"></div>
     </h3>
+</div>
+
+<div class="school-page-body">
+
     <div class="review-button" style= "text-align: center; margin-top: 5%">
         <% if logged_in? %>
             <%= link_to "Post a Review", new_school_review_path(school), class: "btn btn-primary", :remote => true %>
@@ -24,18 +28,17 @@
             <% end %>
         <% end %>
     </div>
+    
+    <div id="crimes_filter" style="border-bottom: 1px solid #ccc;">
+        <%= render partial: 'crimesfilter', locals: {id: school.id} %>
+    </div>
+    
+    <div id="crimes-list">
+      <%= render partial: 'crimes', locals: {crimes: @crimes} %>
+    </div>
+    
+    <div id="reviews-list">
+        <%= render partial: 'reviewslist', locals: {id: params[:id]} %>
+    </div>
+
 </div>
-
-<div id="crimes_filter" style="border-bottom: 1px solid #ccc;">
-    <%= render partial: 'crimesfilter', locals: {id: school.id} %>
-</div>
-
-<div id="crimes-list">
-  <%= render partial: 'crimes', locals: {crimes: @crimes} %>
-</div>
-
-<div id="reviews-list">
-    <%= render partial: 'reviewslist', locals: {id: params[:id]} %>
-</div>
-
-
