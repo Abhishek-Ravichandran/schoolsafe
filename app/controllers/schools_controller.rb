@@ -11,8 +11,9 @@ class SchoolsController < ApplicationController
   # GET /schools/1
   # GET /schools/1.json
   def show
-    lat = School.find(params[:id]).latitude
-    long = School.find(params[:id]).longitude
+    @school = School.find(params[:id])
+    lat = @school.latitude
+    long = @school.longitude
     @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 300) AND ucr_general in ('100', '200', '400', '1400', '1600', '1700', '1800', '1900', '2000', '2400', '2500') AND dispatch_date_time between '#{Time.now.year-3}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00'"})
     
     @score = @crimes.inject(0) { |sum, c|
@@ -41,7 +42,40 @@ class SchoolsController < ApplicationController
     end
   end
   
+  def submit
+    review_params = params[:review].permit(:school_id, :title, :rating, :comment)
+    @review = current_user.review.build(review_params)
+    @school = School.find(params[:review][:school_id])
+    
+    if @review.save then
+      lat = @school.latitude
+      long = @school.longitude
+      @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 300) AND ucr_general in ('100', '200', '400', '1400', '1600', '1700', '1800', '1900', '2000', '2400', '2500') AND dispatch_date_time between '#{Time.now.year-3}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00'"})
+    
+      @score = @crimes.inject(0) { |sum, c|
+        if ["100", "200"].include? c["ucr_general"] then
+          sum + 5 
+        elsif ["1700", "2000"].include? c["ucr_general"] then
+          sum + 4
+        elsif ["400", "1600", "1800"].include? c["ucr_general"] then
+          sum + 3
+        elsif ["1400", "1900"].include? c["ucr_general"] then
+          sum + 2
+        elsif ["2400", "2500"].include? c["ucr_general"] then
+          sum + 1
+        end
+      }
+      
+      respond_to do |format|
+        format.js
+      end
+    else
+      redirect_to new_school_review_path(@school)
+    end
+  end
+  
   def crimefilter
+    @school = School.find(params[:id])
     lat = School.find(params[:id]).latitude
     long = School.find(params[:id]).longitude
     classes = params[:classes].join("', '")

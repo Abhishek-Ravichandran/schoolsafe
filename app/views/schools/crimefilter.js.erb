@@ -1,3 +1,3 @@
-$("#map_part").html("<%= escape_javascript(render partial: 'crimesmap', locals: { id: params[:id], crimes: @crimes }) %>");
+$("#map_part").html("<%= escape_javascript(render partial: 'crimesmap', locals: { school: @school, crimes: @crimes }) %>");
 $("#crimes-list").html("<%= escape_javascript(render partial: 'crimes', locals: { crimes: @crimes }) %>");
 $("#safety-rating").html("<%= escape_javascript(render partial: 'rating', locals: {score: @score}) %>");
