@@ -263,8 +263,8 @@ When (/^I don't enter all the signup fields correctly$/) do
   fill_in('Confirmation', :with => 'mathandpoetryarelife')
 end
 
-And (/^I click the Create User button$/) do
-  click_button('Create my account')
+And (/^I click the Submit button$/) do
+  click_button('Submit')
 end
 
 Then (/^I should be able to create an account$/) do
@@ -523,6 +523,8 @@ When (/^I zoom in$/) do
   page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
   sleep 1
   page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
+  sleep 1
+  page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
 end
 
 Then (/^I should see two schools in the list$/) do
@@ -552,8 +554,8 @@ Then(/^only Assault crimes appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 8, "This was expected to be true")
-  assert(list.size == 8, "This was expected to be true")
+  assert(number_of_markers == 2, "This was expected to be true")
+  assert(list.size == 2, "This was expected to be true")
 end
 
 When (/^I select "Aggravated Assault"$/) do
@@ -570,8 +572,8 @@ Then(/^only the crimes within 1 year appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 15, "This was expected to be true")
-  assert(list.size == 15, "This was expected to be true")
+  assert(number_of_markers == 4, "This was expected to be true")
+  assert(list.size == 4, "This was expected to be true")
 end
 
 When (/^I select "100m"$/) do
@@ -584,8 +586,8 @@ Then(/^only the crimes within 100m appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 9, "This was expected to be true")
-  assert(list.size == 9, "This was expected to be true")
+  assert(number_of_markers == 4, "This was expected to be true")
+  assert(list.size == 4, "This was expected to be true")
 end
 
 And (/^There are reviews of that school in the database$/) do
@@ -674,3 +676,31 @@ Then (/^I should see that bookmark$/) do
   assert page.has_content? @school.address
 end
 
+<<<<<<< HEAD
+Given (/^There is a real school in the database$/) do
+  @school = School.new do |s|
+    s.name = "Henry, Charles W."
+    s.address = "601 Carpenter La."
+    s.grade_level = "Elem/Middle"
+    s.zipcode = "19119 - 3405"
+    s.school_type = "District"
+    s.latitude = "40.04626899457544"
+    s.longitude = "-75.19654553310839"
+  end
+  @school.save
+end
+
+And (/^I am on the real school page$/) do
+  click_link @school.name
+end
+  
+=======
+When (/^I hover over the marker$/) do
+  page.find("div[title='Capybara High School']").hover
+  sleep 1
+end
+
+Then (/^the link to the school should pop up$/) do
+  page.assert_selector('div[style="overflow: auto;"] a[data-remote="true"]')
+end
+>>>>>>> 0b29a17ee567bb90b25fd7a760a103954e91f92c

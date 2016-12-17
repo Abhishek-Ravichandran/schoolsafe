@@ -84,6 +84,10 @@
           var marker = new google.maps.Marker({
           position: pos,
           map: map,
+          <% if (Rails.env != "production") then %>
+          title: "<%= school_name %>",
+          optimized: false
+          <% end %>
           });
           marker.info = new google.maps.InfoWindow({
             content: contentString
