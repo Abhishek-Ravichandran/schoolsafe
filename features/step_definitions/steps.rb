@@ -523,6 +523,8 @@ When (/^I zoom in$/) do
   page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
   sleep 1
   page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
+  sleep 1
+  page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
 end
 
 Then (/^I should see two schools in the list$/) do
@@ -674,6 +676,7 @@ Then (/^I should see that bookmark$/) do
   assert page.has_content? @school.address
 end
 
+<<<<<<< HEAD
 Given (/^There is a real school in the database$/) do
   @school = School.new do |s|
     s.name = "Henry, Charles W."
@@ -691,3 +694,13 @@ And (/^I am on the real school page$/) do
   click_link @school.name
 end
   
+=======
+When (/^I hover over the marker$/) do
+  page.find("div[title='Capybara High School']").hover
+  sleep 1
+end
+
+Then (/^the link to the school should pop up$/) do
+  page.assert_selector('div[style="overflow: auto;"] a[data-remote="true"]')
+end
+>>>>>>> 0b29a17ee567bb90b25fd7a760a103954e91f92c
