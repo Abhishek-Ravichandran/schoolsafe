@@ -572,8 +572,8 @@ Then(/^only the crimes within 1 year appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 15, "This was expected to be true")
-  assert(list.size == 15, "This was expected to be true")
+  assert(number_of_markers == 14, "This was expected to be true")
+  assert(list.size == 14, "This was expected to be true")
 end
 
 When (/^I select "100m"$/) do
@@ -586,8 +586,8 @@ Then(/^only the crimes within 100m appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 9, "This was expected to be true")
-  assert(list.size == 9, "This was expected to be true")
+  assert(number_of_markers == 8, "This was expected to be true")
+  assert(list.size == 8, "This was expected to be true")
 end
 
 And (/^There are reviews of that school in the database$/) do
