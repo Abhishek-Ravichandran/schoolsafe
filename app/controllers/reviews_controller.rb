@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  # skip_before_filter :verify_authenticity_token, :only => [:new]
 
   # GET /reviews
   # GET /reviews.json
@@ -15,6 +16,9 @@ class ReviewsController < ApplicationController
   # GET /reviews/new
   def new
     @review = Review.new
+    respond_to do |format|
+        format.js
+    end
   end
 
   # GET /reviews/1/edit

@@ -3,7 +3,7 @@
     (function initMap() {
         document.getElementById('map').style.height = String(document.getElementsByClassName('container fill')[0].offsetHeight) + "px";
         
-        var centerPos = {lat: <%= School.find(params[:id])["latitude"] %>, lng: <%= School.find(params[:id])["longitude"] %>}
+        var centerPos = {lat: <%= school.latitude %>, lng: <%= school.longitude %>}
         var zoom_level = 17;
         
         map = new google.maps.Map(document.getElementById('map'), {

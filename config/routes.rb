@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   post 'filter', to: 'static_pages#filter'
   post 'mapchange', to: 'static_pages#mapchange'
   post 'crimefilter', to: 'schools#crimefilter'
+  post 'submit', to: 'schools#submit'
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
   get 'signup', to: 'users#new'
