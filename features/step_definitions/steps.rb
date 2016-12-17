@@ -523,6 +523,8 @@ When (/^I zoom in$/) do
   page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
   sleep 1
   page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
+  sleep 1
+  page.find('#map > div > div > div:nth-child(8) > div.gmnoprint > div > div:nth-child(1)').click
 end
 
 Then (/^I should see two schools in the list$/) do
@@ -674,3 +676,11 @@ Then (/^I should see that bookmark$/) do
   assert page.has_content? @school.address
 end
 
+When (/^I hover over the marker$/) do
+  page.find("div[title='Capybara High School']").hover
+  sleep 1
+end
+
+Then (/^the link to the school should pop up$/) do
+  page.assert_selector('div[style="overflow: auto;"] a[data-remote="true"]')
+end
