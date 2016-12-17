@@ -263,8 +263,8 @@ When (/^I don't enter all the signup fields correctly$/) do
   fill_in('Confirmation', :with => 'mathandpoetryarelife')
 end
 
-And (/^I click the Create User button$/) do
-  click_button('Create my account')
+And (/^I click the Submit button$/) do
+  click_button('Submit')
 end
 
 Then (/^I should be able to create an account$/) do
