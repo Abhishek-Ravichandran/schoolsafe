@@ -676,7 +676,6 @@ Then (/^I should see that bookmark$/) do
   assert page.has_content? @school.address
 end
 
-<<<<<<< HEAD
 Given (/^There is a real school in the database$/) do
   @school = School.new do |s|
     s.name = "Henry, Charles W."
@@ -694,7 +693,6 @@ And (/^I am on the real school page$/) do
   click_link @school.name
 end
   
-=======
 When (/^I hover over the marker$/) do
   page.find("div[title='Capybara High School']").hover
   sleep 1
@@ -703,4 +701,3 @@ end
 Then (/^the link to the school should pop up$/) do
   page.assert_selector('div[style="overflow: auto;"] a[data-remote="true"]')
 end
->>>>>>> 0b29a17ee567bb90b25fd7a760a103954e91f92c

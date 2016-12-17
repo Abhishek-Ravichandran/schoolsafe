@@ -1,3 +1,5 @@
+<h3>New Review</h3>
+
 <%= form_for(@review, url: submit_path, :method => 'post', :remote => true) do |f| %>
   <% if @review.errors.any? %>
     <div id="error_explanation">

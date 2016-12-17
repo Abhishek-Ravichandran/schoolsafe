@@ -67,12 +67,12 @@ class SchoolsController < ApplicationController
     }
     
     if @review.save then
-      flash[:notice] = 'Review Saved!'
+      flash[:notice] = 'Review was successfully created.'
       respond_to do |format|
         format.js
       end
     else
-      flash[:notice] = 'Review Not Saved!'
+      flash[:notice] = 'Errors prohibited this review from being saved.'
       respond_to do |format|
         format.js
       end
