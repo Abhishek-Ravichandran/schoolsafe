@@ -1,5 +1,6 @@
 class SchoolsController < ApplicationController
   before_action :set_school, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token, :only => [:new, :submit]
   
   @@client = SODA::Client.new({:domain => "data.phila.gov", :app_token => "A2UU0wuMdd6NOSuwVvjSu5i3u"})
   # GET /schools
@@ -44,33 +45,37 @@ class SchoolsController < ApplicationController
   
   def submit
     review_params = params[:review].permit(:school_id, :title, :rating, :comment)
-    @review = current_user.review.build(review_params)
+    @review = current_user.reviews.build(review_params)
     @school = School.find(params[:review][:school_id])
     
-    if @review.save then
-      lat = @school.latitude
-      long = @school.longitude
-      @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 300) AND ucr_general in ('100', '200', '400', '1400', '1600', '1700', '1800', '1900', '2000', '2400', '2500') AND dispatch_date_time between '#{Time.now.year-3}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00'"})
+    lat = @school.latitude
+    long = @school.longitude
+    @crimes = @@client.get("sspu-uyfa", {"$where" => "within_circle(shape, #{lat}, #{long}, 300) AND ucr_general in ('100', '200', '400', '1400', '1600', '1700', '1800', '1900', '2000', '2400', '2500') AND dispatch_date_time between '#{Time.now.year-3}-#{Time.now.month}-#{Time.now.day}T00:00:00' and '#{Time.now.year}-#{Time.now.month}-#{Time.now.day}T00:00:00'"})
     
-      @score = @crimes.inject(0) { |sum, c|
-        if ["100", "200"].include? c["ucr_general"] then
-          sum + 5 
-        elsif ["1700", "2000"].include? c["ucr_general"] then
-          sum + 4
-        elsif ["400", "1600", "1800"].include? c["ucr_general"] then
-          sum + 3
-        elsif ["1400", "1900"].include? c["ucr_general"] then
-          sum + 2
-        elsif ["2400", "2500"].include? c["ucr_general"] then
-          sum + 1
-        end
-      }
-      
+    @score = @crimes.inject(0) { |sum, c|
+      if ["100", "200"].include? c["ucr_general"] then
+        sum + 5 
+      elsif ["1700", "2000"].include? c["ucr_general"] then
+        sum + 4
+      elsif ["400", "1600", "1800"].include? c["ucr_general"] then
+        sum + 3
+      elsif ["1400", "1900"].include? c["ucr_general"] then
+        sum + 2
+      elsif ["2400", "2500"].include? c["ucr_general"] then
+        sum + 1
+      end
+    }
+    
+    if @review.save then
+      flash[:notice] = 'Review Saved!'
       respond_to do |format|
         format.js
       end
     else
-      redirect_to new_school_review_path(@school)
+      flash[:notice] = 'Review Not Saved!'
+      respond_to do |format|
+        format.js
+      end
     end
   end
   

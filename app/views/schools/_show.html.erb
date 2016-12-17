@@ -10,7 +10,7 @@
     </h3>
 </div>
 
-<div class="school-page-body">
+<div id="school-page-body">
     <div class="review-button" style= "text-align: center; margin-top: 5%">
         <% if logged_in? %>
             <%= link_to "Post a Review", new_school_review_path(school), class: "btn btn-primary", :remote => true %>
@@ -18,7 +18,7 @@
     </div>
     <div class="favorite-button" style= "text-align: center; margin-top: 5%">
         <% if logged_in? %>
-            <% if favorite? @school %>
+            <% if favorite? school %>
                 <%= link_to "Remove Bookmark", favorite_school_path(school, type: "unfavorite"), class: "btn btn-primary",
                     method: :post %>
             <% else %>
@@ -37,7 +37,7 @@
     </div>
     
     <div id="reviews-list">
-        <%= render partial: 'reviewslist', locals: {id: params[:id]} %>
+        <%= render partial: 'reviewslist', locals: {id: school.id} %>
     </div>
 
 </div>
