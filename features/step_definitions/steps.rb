@@ -552,8 +552,8 @@ Then(/^only Assault crimes appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 8, "This was expected to be true")
-  assert(list.size == 8, "This was expected to be true")
+  assert(number_of_markers == 2, "This was expected to be true")
+  assert(list.size == 2, "This was expected to be true")
 end
 
 When (/^I select "Aggravated Assault"$/) do
@@ -570,8 +570,8 @@ Then(/^only the crimes within 1 year appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 15, "This was expected to be true")
-  assert(list.size == 15, "This was expected to be true")
+  assert(number_of_markers == 4, "This was expected to be true")
+  assert(list.size == 4, "This was expected to be true")
 end
 
 When (/^I select "100m"$/) do
@@ -584,8 +584,8 @@ Then(/^only the crimes within 100m appear in the list and map$/) do
   list = Array.new
   list = find('#crimes-list ul').all('li')
   number_of_markers = page.find('#map_part > script', :visible => false).text().split('var marker').length - 2
-  assert(number_of_markers == 9, "This was expected to be true")
-  assert(list.size == 9, "This was expected to be true")
+  assert(number_of_markers == 4, "This was expected to be true")
+  assert(list.size == 4, "This was expected to be true")
 end
 
 And (/^There are reviews of that school in the database$/) do
@@ -674,3 +674,20 @@ Then (/^I should see that bookmark$/) do
   assert page.has_content? @school.address
 end
 
+Given (/^There is a real school in the database$/) do
+  @school = School.new do |s|
+    s.name = "Henry, Charles W."
+    s.address = "601 Carpenter La."
+    s.grade_level = "Elem/Middle"
+    s.zipcode = "19119 - 3405"
+    s.school_type = "District"
+    s.latitude = "40.04626899457544"
+    s.longitude = "-75.19654553310839"
+  end
+  @school.save
+end
+
+And (/^I am on the real school page$/) do
+  click_link @school.name
+end
+  
