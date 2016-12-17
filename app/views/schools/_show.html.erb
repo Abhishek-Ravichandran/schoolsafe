@@ -10,7 +10,7 @@
     </h3>
     <div class="review-button" style= "text-align: center; margin-top: 5%">
         <% if logged_in? %>
-            <%= link_to "Post a Review", new_school_review_path(school), class: "btn btn-primary" %>
+            <%= link_to "Post a Review", new_school_review_path(school), class: "btn btn-primary", :remote => true %>
         <% end %>
     </div>
     <div class="favorite-button" style= "text-align: center; margin-top: 5%">
